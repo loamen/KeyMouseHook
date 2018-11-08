@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://raw.githubusercontent.com/loamen/KeyMouseHook/master/LICENSE)
 [![platforms](https://img.shields.io/badge/platform-Windows-yellow.svg?style=flat)]()
 
-[nuget-badge]: https://img.shields.io/badge/nuget-v1.0.0-blue.svg
+[nuget-badge]: https://img.shields.io/badge/nuget-v1.0.1-blue.svg
 [nuget-url]: https://www.nuget.org/packages/KeyMouseHook
 [source-url]: https://github.com/loamen/KeyMouseHook
 [mousekeyhook-url]: https://github.com/gmamaladze/globalmousekeyhook

@@ -5,7 +5,7 @@
 [![platforms](https://img.shields.io/badge/platform-Windows-yellow.svg?style=flat)]()
 <a target="_blank" href="https://shang.qq.com/wpa/qunwpa?idkey=419cea0774ab1aa37ae1a35eb0292482f9d8aa8decbab52eb62d9c5aa92c9c13"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="龙门信息①" title="龙门信息①"></a>
 
-[nuget-badge]: https://img.shields.io/badge/nuget-v1.0.0-blue.svg
+[nuget-badge]: https://img.shields.io/badge/nuget-v1.0.1-blue.svg
 [nuget-url]: https://www.nuget.org/packages/KeyMouseHook
 [source-url]: https://github.com/loamen/KeyMouseHook
 [mousekeyhook-url]: https://github.com/gmamaladze/globalmousekeyhook
