@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Loamen.KeyMouseHook")]
-[assembly: AssemblyDescription("This library allows you to tap keyboard and mouse, detect and record their activity even and simulate keyboard or mouse input.")]
+[assembly: AssemblyDescription("This library allows you to tap keyboard and mouse, detect and record their activity event and simulate keyboard or mouse input.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Loamen.com")]
 [assembly: AssemblyProduct("Loamen.KeyMouseHook")]
