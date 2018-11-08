@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F872EBA8-CFC4-4ABD-8C45-7B5F091E794A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Loamen.KeyMouseHook</RootNamespace>
+    <AssemblyName>KeyMouseHook</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entity\MacroEvent.cs" />
+    <Compile Include="Hotkey.cs" />
+    <Compile Include="KeyboardWatcher.cs" />
+    <Compile Include="KeyMouseFactory.cs" />
+    <Compile Include="MouseWatcher.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simulators\GlobalKeySimulator.cs" />
+    <Compile Include="Simulators\KeyMouseSimulator.cs" />
+    <Compile Include="Simulators\GlobalMouseSimulator.cs" />
+    <Compile Include="WindowsInput\IInputDeviceStateAdaptor.cs" />
+    <Compile Include="WindowsInput\IInputMessageDispatcher.cs" />
+    <Compile Include="WindowsInput\IInputSimulator.cs" />
+    <Compile Include="WindowsInput\IKeyboardSimulator.cs" />
+    <Compile Include="WindowsInput\IMouseSimulator.cs" />
+    <Compile Include="WindowsInput\InputBuilder.cs" />
+    <Compile Include="WindowsInput\InputSimulator.cs" />
+    <Compile Include="WindowsInput\KeyboardSimulator.cs" />
+    <Compile Include="WindowsInput\MouseButton.cs" />
+    <Compile Include="WindowsInput\MouseSimulator.cs" />
+    <Compile Include="WindowsInput\Native\HARDWAREINPUT.cs" />
+    <Compile Include="WindowsInput\Native\INPUT.cs" />
+    <Compile Include="WindowsInput\Native\InputType.cs" />
+    <Compile Include="WindowsInput\Native\KEYBDINPUT.cs" />
+    <Compile Include="WindowsInput\Native\KeyboardFlag.cs" />
+    <Compile Include="WindowsInput\Native\MouseFlag.cs" />
+    <Compile Include="WindowsInput\Native\MOUSEINPUT.cs" />
+    <Compile Include="WindowsInput\Native\MOUSEKEYBDHARDWAREINPUT.cs" />
+    <Compile Include="WindowsInput\Native\NativeMethods.cs" />
+    <Compile Include="WindowsInput\Native\VirtualKeyCode.cs" />
+    <Compile Include="WindowsInput\Native\XButton.cs" />
+    <Compile Include="WindowsInput\WindowsInputDeviceStateAdaptor.cs" />
+    <Compile Include="WindowsInput\WindowsInputMessageDispatcher.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
