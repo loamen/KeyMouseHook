@@ -9,7 +9,7 @@
 [nuget-url]: https://www.nuget.org/packages/KeyMouseHook
 [source-url]: https://github.com/loamen/KeyMouseHook
 
-![c#(winform)模拟键盘按键和鼠标点击操作类库](documents/images/keyboard-mouse-hook-logo.png)
+![c#(winform)模拟键盘按键和鼠标点击操作类库](https://github.com/loamen/KeyMouseHook/raw/master/documents/images/keyboard-mouse-hook-logo.png)
 
 <a href="README.md" target="_blank">English</a> <br/>
 
@@ -18,7 +18,7 @@
 这是一个基于[globalmousekeyhook][MouseKeyHook-Url] 和 [InputSimulator][InputSimulator-Url] 的类似于按键精灵的模拟键盘按键和鼠标点击操作的扩展类库。可以检测并记录键盘和鼠标的活动，你可以录制你的键鼠操作的记录并进行回放，可模拟键盘输入和鼠标点击操作。
 ## 环境
 
-* **Windows:** .Net Framework 4.6+
+* **Windows:** .Net Framework 4.0+
 
 ## 安装和源码
 
@@ -81,7 +81,7 @@ private void Playback()
 
 ## 界面
 
-![c#(winform)模拟键盘按键和鼠标点击操作类库](documents/images/screen-shots.png)
+![c#(winform)模拟键盘按键和鼠标点击操作类库](https://github.com/loamen/KeyMouseHook/raw/master/documents/images/screen-shots.png)
 
 ## 鸣谢
 

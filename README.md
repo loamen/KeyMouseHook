@@ -8,7 +8,7 @@
 [nuget-url]: https://www.nuget.org/packages/KeyMouseHook
 [source-url]: https://github.com/loamen/KeyMouseHook
 
-![Keyboard and Mouse Hooking and Simulator Library in c#(winform)](documents/images/keyboard-mouse-hook-logo.png)
+![Keyboard and Mouse Hooking and Simulator Library in c#(winform)](https://github.com/loamen/KeyMouseHook/raw/master/documents/images/keyboard-mouse-hook-logo.png)
 
 <a href="README.zh-CN.md" target="_blank">中文介绍</a> <br/>
 
@@ -18,7 +18,7 @@ This is a extension library use [globalmousekeyhook][MouseKeyHook-Url] and [Inpu
 
 ## Prerequisites
 
-* **Windows:** .Net Framework 4.6+
+* **Windows:** .Net Framework 4.0+
 
 ## Installation and sources
 
@@ -81,7 +81,7 @@ private void Playback()
 
 ## Screen Shots
 
-![Keyboard and Mouse Hooking and Simulator Library in c#(winform)](documents/images/screen-shots.png)
+![Keyboard and Mouse Hooking and Simulator Library in c#(winform)](https://github.com/loamen/KeyMouseHook/raw/master/documents/images/screen-shots.png)
 
 ## Thanks
 

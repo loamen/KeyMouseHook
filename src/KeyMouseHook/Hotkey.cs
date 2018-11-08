@@ -68,7 +68,8 @@ namespace Loamen.KeyMouseHook
         {
             UInt32 hotkeyid = GlobalAddAtom(Guid.NewGuid().ToString());
             RegisterHotKey(hWnd, hotkeyid, (UInt32)keyflags, (UInt32)Key);
-            keyIDs.Add(hotkeyid, hotkeyid);
+            if (!keyIDs.ContainsKey(hotkeyid))
+                keyIDs.Add(hotkeyid, hotkeyid);
             return (int)hotkeyid;
         }
 

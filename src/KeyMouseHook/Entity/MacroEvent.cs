@@ -13,7 +13,7 @@ namespace Loamen.KeyMouseHook
     /// Series of events that can be recorded any played back
     /// </summary>
     [Serializable]
-    public class MacroEvent
+    public class MacroEvent : EventArgs
     {
         public MacroEventType KeyMouseEventType;
         public EventArgs EventArgs;
