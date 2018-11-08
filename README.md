@@ -7,14 +7,17 @@
 [nuget-badge]: https://img.shields.io/badge/nuget-v1.0.0-blue.svg
 [nuget-url]: https://www.nuget.org/packages/KeyMouseHook
 [source-url]: https://github.com/loamen/KeyMouseHook
+[mousekeyhook-url]: https://github.com/gmamaladze/globalmousekeyhook
+[inputsimulator-url]: https://github.com/michaelnoonan/inputsimulator
+[readme-url]: https://github.com/loamen/KeyMouseHook/blob/master/README.zh-CN.md
 
 ![Keyboard and Mouse Hooking and Simulator Library in c#(winform)](https://github.com/loamen/KeyMouseHook/raw/master/documents/images/keyboard-mouse-hook-logo.png)
 
-<a href="README.zh-CN.md" target="_blank">中文介绍</a> <br/>
+[中文介绍][readme-url]
 
 ## What it does?
 
-This is a extension library use [globalmousekeyhook][MouseKeyHook-Url] and [InputSimulator][InputSimulator-Url] .it allows you to tap keyboard and mouse, to detect and record their activity event when an application is inactive and runs in background.The Windows Input Simulator provides a simple .NET(C#) interface to simulate Keyboard or Mouse input using the Win32 SendInput method.
+This is a extension library use [globalmousekeyhook][mousekeyhook-url] and [InputSimulator][inputsimulator-url] .it allows you to tap keyboard and mouse, to detect and record their activity event when an application is inactive and runs in background.The Windows Input Simulator provides a simple .NET(C#) interface to simulate Keyboard or Mouse input using the Win32 SendInput method.
 
 ## Prerequisites
 
@@ -22,9 +25,9 @@ This is a extension library use [globalmousekeyhook][MouseKeyHook-Url] and [Inpu
 
 ## Installation and sources
 
-<pre>
-  nuget install KeyMouseHook
-</pre>
+
+> nuget install KeyMouseHook
+
 
 * [NuGet package][nuget-url]
 * [Source code][source-url]
@@ -85,12 +88,9 @@ private void Playback()
 
 ## Thanks
 
-* [globalmousekeyhook][MouseKeyHook-Url] (MIT License)
-* [InputSimulator][InputSimulator-Url] (MIT License)
-
-[MouseKeyHook-Url]: https://github.com/gmamaladze/globalmousekeyhook "MouseKeyHook"
-[InputSimulator-Url]: https://github.com/michaelnoonan/inputsimulator "InputSimulator"
+* [globalmousekeyhook][mousekeyhook-url] (MIT License)
+* [InputSimulator][inputsimulator-url] (MIT License)
 
 ## License
 
-The MIT license see: [LICENSE](LICENSE)
+The MIT license see: [LICENSE](https://github.com/loamen/KeyMouseHook/blob/master/LICENSE)

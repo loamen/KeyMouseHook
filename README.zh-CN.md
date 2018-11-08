@@ -8,23 +8,24 @@
 [nuget-badge]: https://img.shields.io/badge/nuget-v1.0.0-blue.svg
 [nuget-url]: https://www.nuget.org/packages/KeyMouseHook
 [source-url]: https://github.com/loamen/KeyMouseHook
+[mousekeyhook-url]: https://github.com/gmamaladze/globalmousekeyhook
+[inputsimulator-url]: https://github.com/michaelnoonan/inputsimulator
+[readme-url]: https://github.com/loamen/KeyMouseHook/blob/master/README.md
 
 ![c#(winform)模拟键盘按键和鼠标点击操作类库](https://github.com/loamen/KeyMouseHook/raw/master/documents/images/keyboard-mouse-hook-logo.png)
 
-<a href="README.md" target="_blank">English</a> <br/>
+[English][readme-url]
 
 ## 简介
 
-这是一个基于[globalmousekeyhook][MouseKeyHook-Url] 和 [InputSimulator][InputSimulator-Url] 的类似于按键精灵的模拟键盘按键和鼠标点击操作的扩展类库。可以检测并记录键盘和鼠标的活动，你可以录制你的键鼠操作的记录并进行回放，可模拟键盘输入和鼠标点击操作。
+这是一个基于[globalmousekeyhook][mousekeyhook-url] 和 [InputSimulator][inputsimulator-url] 的类似于按键精灵的模拟键盘按键和鼠标点击操作的扩展类库。可以检测并记录键盘和鼠标的活动，你可以录制你的键鼠操作的记录并进行回放，可模拟键盘输入和鼠标点击操作。
 ## 环境
 
 * **Windows:** .Net Framework 4.0+
 
 ## 安装和源码
 
-<pre>
-  nuget install KeyMouseHook
-</pre>
+> nuget install KeyMouseHook
 
 * [NuGet package][nuget-url]
 * [Source code][source-url]
@@ -85,12 +86,9 @@ private void Playback()
 
 ## 鸣谢
 
-* [globalmousekeyhook][MouseKeyHook-Url] (MIT License)
-* [InputSimulator][InputSimulator-Url] (MIT License)
-
-[MouseKeyHook-Url]: https://github.com/gmamaladze/globalmousekeyhook "MouseKeyHook"
-[InputSimulator-Url]: https://github.com/michaelnoonan/inputsimulator "InputSimulator"
+* [globalmousekeyhook][mousekeyhook-url] (MIT License)
+* [InputSimulator][inputsimulator-url] (MIT License)
 
 ## License
 
-The MIT license see: [LICENSE](LICENSE)
+The MIT license see: [LICENSE](https://github.com/loamen/KeyMouseHook/blob/master/LICENSE)
