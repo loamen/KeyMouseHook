@@ -9,6 +9,10 @@ namespace Loamen.KeyMouseHook
 
     public class Hotkey : IMessageFilter
     {
+        public event HotkeyEventHandler OnHotkey;
+        private readonly IntPtr hWnd;
+        private readonly Hashtable keyIDs = new Hashtable();
+
         public enum KeyFlags
         {
             None = 0x0,
@@ -22,8 +26,22 @@ namespace Loamen.KeyMouseHook
             MOD_ALT_CTRL_SHIFT = 0x7
         }
 
-        private readonly IntPtr hWnd;
-        private readonly Hashtable keyIDs = new Hashtable();
+        #region Windows Api Code
+
+        [DllImport("user32.dll")]
+        public static extern UInt32 RegisterHotKey(IntPtr hWnd, UInt32 id, UInt32 fsModifiers, UInt32 vk);
+
+        [DllImport("user32.dll")]
+        public static extern UInt32 UnregisterHotKey(IntPtr hWnd, UInt32 id);
+
+        [DllImport("kernel32.dll")]
+        public static extern UInt32 GlobalAddAtom(String lpString);
+
+        [DllImport("kernel32.dll")]
+        public static extern UInt32 GlobalDeleteAtom(UInt32 nAtom);
+        #endregion
+
+        #region Methods
 
         public Hotkey(IntPtr hWnd)
         {
@@ -49,20 +67,6 @@ namespace Loamen.KeyMouseHook
             }
             return false;
         }
-
-        public event HotkeyEventHandler OnHotkey;
-
-        [DllImport("user32.dll")]
-        public static extern UInt32 RegisterHotKey(IntPtr hWnd, UInt32 id, UInt32 fsModifiers, UInt32 vk);
-
-        [DllImport("user32.dll")]
-        public static extern UInt32 UnregisterHotKey(IntPtr hWnd, UInt32 id);
-
-        [DllImport("kernel32.dll")]
-        public static extern UInt32 GlobalAddAtom(String lpString);
-
-        [DllImport("kernel32.dll")]
-        public static extern UInt32 GlobalDeleteAtom(UInt32 nAtom);
 
         public int RegisterHotkey(Keys Key, KeyFlags keyflags)
         {
@@ -91,5 +95,6 @@ namespace Loamen.KeyMouseHook
                 GlobalDeleteAtom(key);
             }
         }
+        #endregion
     }
 }

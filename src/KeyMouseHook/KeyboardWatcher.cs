@@ -11,19 +11,36 @@ namespace Loamen.KeyMouseHook
 {
     public class KeyboardWatcher: IDisposable
     {
+        #region Fields
         private readonly object accesslock = new object();
         public event EventHandler<MacroEvent> OnKeyboardInput;
-        private bool isRunning { get; set; }
         private int lastTimeRecorded = 0;
-        private KeyMouseFactory Factory { get; set; }
+        private bool enableKeyPress = false;
+        #endregion
 
+        #region Properties
+        private bool isRunning { get; set; }
+        private KeyMouseFactory Factory { get; set; }
+        #endregion
+
+        #region Ctor
         internal KeyboardWatcher(KeyMouseFactory factory)
         {
             this.Factory = factory;
         }
 
         /// <summary>
-        /// Start watching mouse events
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            this.Unsubscribe();
+        }
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Start watching key events
         /// </summary>
         public void Start(IKeyboardMouseEvents events = null)
         {
@@ -40,7 +57,7 @@ namespace Loamen.KeyMouseHook
         }
 
         /// <summary>
-        /// Stop watching mouse events
+        /// Stop watching key events
         /// </summary>
         public void Stop()
         {
@@ -54,23 +71,27 @@ namespace Loamen.KeyMouseHook
             }
         }
 
+        /// <summary>
+        /// enable key press event
+        /// </summary>
+        /// <param name="macroEventType">MacroEventType.KeyPress</param>
+        /// <returns></returns>
+        public KeyboardWatcher Enable(MacroEventType macroEventType)
+        {
+            if ((macroEventType & MacroEventType.KeyPress) > 0)
+                this.enableKeyPress = true;
+          
+            return this;
+        }
+
         internal void Subscribe(IKeyboardMouseEvents events = null)
         {
             if (events != null) this.Factory.KeyboardMouseEvents = events;
 
             this.Factory.KeyboardMouseEvents.KeyDown += OnKeyDown;
             this.Factory.KeyboardMouseEvents.KeyUp += OnKeyUp;
-            this.Factory.KeyboardMouseEvents.KeyPress += OnKeyPress;
-        }
-
-        private void OnKeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (isRunning)
-            {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.KeyPress, e, time));
-                Debug.WriteLine(string.Format("KeyPress  \t\t {0}\n", e.KeyChar));
-            }
+            if (enableKeyPress)
+                this.Factory.KeyboardMouseEvents.KeyPress += OnKeyPress;
         }
 
         internal void Unsubscribe()
@@ -79,7 +100,20 @@ namespace Loamen.KeyMouseHook
 
             this.Factory.KeyboardMouseEvents.KeyDown -= OnKeyDown;
             this.Factory.KeyboardMouseEvents.KeyUp -= OnKeyUp;
-            this.Factory.KeyboardMouseEvents.KeyPress -= OnKeyPress;
+            if (enableKeyPress)
+                this.Factory.KeyboardMouseEvents.KeyPress -= OnKeyPress;
+        }
+        #endregion
+
+        #region key events
+        private void OnKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (isRunning)
+            {
+                var time = Environment.TickCount - lastTimeRecorded;
+                KListener_KeyDown(new MacroEvent(MacroEventType.KeyPress, e, time));
+                Debug.WriteLine(string.Format("KeyPress  \t\t {0}\n", e.KeyChar));
+            }
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
@@ -101,7 +135,7 @@ namespace Loamen.KeyMouseHook
                 Debug.WriteLine(string.Format("KeyUp  \t\t {0}\n", e.KeyCode));
             }
         }
-
+       
         /// <summary>
         /// Invoke user callbacks with the argument
         /// </summary>
@@ -111,13 +145,6 @@ namespace Loamen.KeyMouseHook
             lastTimeRecorded = Environment.TickCount;
             OnKeyboardInput?.Invoke(null, e);
         }
-
-        /// <summary>
-        /// Dispose
-        /// </summary>
-        public void Dispose()
-        {
-            this.Unsubscribe();
-        }
+        #endregion
     }
 }

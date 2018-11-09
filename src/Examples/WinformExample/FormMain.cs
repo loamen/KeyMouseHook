@@ -28,7 +28,7 @@ namespace WinformExample
         {
             InitializeComponent();
 
-            keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
+            keyboardWatcher = eventHookFactory.GetKeyboardWatcher().Enable(MacroEventType.KeyPress);
             keyboardWatcher.OnKeyboardInput += (s, e) =>
             {
                 if (_macroEvents != null)
@@ -46,7 +46,7 @@ namespace WinformExample
                 }
             };
 
-            mouseWatcher = eventHookFactory.GetMouseWatcher();
+            mouseWatcher = eventHookFactory.GetMouseWatcher().Enable(MacroEventType.MouseDragStarted | MacroEventType.MouseDoubleClick);
             mouseWatcher.OnMouseInput += (s, e) =>
             {
                 if (_macroEvents != null)
@@ -83,7 +83,14 @@ namespace WinformExample
                         Log("Mouse Wheel Move Suppressed.\n");
                         wheelEvent.Handled = true;
                         break;
-
+                    case MacroEventType.MouseDragStarted:
+                        Log("MouseDragStarted\n");
+                        break;
+                    case MacroEventType.MouseDragFinished:
+                        Log("MouseDragFinished\n");
+                        break;
+                    default:
+                        break;
                 }
             };
         }

@@ -10,8 +10,10 @@ namespace Loamen.KeyMouseHook.Simulators
 {
     public class KeyMouseSimulator
     {
+        #region Properties
         public GlobalMouseSimulator Mouse { get; set; }
         public GlobalKeySimulator Keyboard { get; set; }
+        #endregion
 
         public KeyMouseSimulator()
         {

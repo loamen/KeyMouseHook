@@ -47,7 +47,7 @@ namespace ConsoleExample
 
         private static void Exit(Action quit)
         {
-            Application.Exit();
+            Environment.Exit(0);
         }
 
         internal static void ConsoleLine()

@@ -4,7 +4,7 @@
 [![license](https://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://raw.githubusercontent.com/loamen/KeyMouseHook/master/LICENSE)
 [![platforms](https://img.shields.io/badge/platform-Windows-yellow.svg?style=flat)]()
 
-[nuget-badge]: https://img.shields.io/badge/nuget-v1.0.1-blue.svg
+[nuget-badge]: https://img.shields.io/badge/nuget-v1.0.2-blue.svg
 [nuget-url]: https://www.nuget.org/packages/KeyMouseHook
 [source-url]: https://github.com/loamen/KeyMouseHook
 [mousekeyhook-url]: https://github.com/gmamaladze/globalmousekeyhook
@@ -59,14 +59,14 @@ public FormMain()
    };
 }
 
-public void StartWatch(IKeyboardMouseEvents events = null)
+private void StartWatch(IKeyboardMouseEvents events = null)
 {
     _macroEvents = new List<MacroEvent>();
     keyboardWatcher.Start(events);
     mouseWatcher.Start(events);
 }
 
-public void StopWatch()
+private void StopWatch()
 {
    keyboardWatcher.Stop();
    mouseWatcher.Stop();
@@ -90,6 +90,12 @@ private void Playback()
 
 * [globalmousekeyhook][mousekeyhook-url] (MIT License)
 * [InputSimulator][inputsimulator-url] (MIT License)
+
+## Quick contributing guide
+
+ - Fork and clone locally
+ - Create a topic specific branch. Add some nice feature.
+ - Send a Pull Request!
 
 ## License
 

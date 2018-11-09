@@ -11,17 +11,35 @@ namespace Loamen.KeyMouseHook
 {
     public class MouseWatcher : IDisposable
     {
+        #region Fields
         private readonly object accesslock = new object();
         public event EventHandler<MacroEvent> OnMouseInput;
-        private bool isRunning { get; set; }
         private int lastTimeRecorded = 0;
-        private KeyMouseFactory Factory { get; set; }
+        private bool enableMouseDrag = false;
+        private bool enableMouseDoubleClick = false;
+        #endregion
 
+        #region Properties
+        private bool isRunning { get; set; }
+        private KeyMouseFactory Factory { get; set; }
+        #endregion
+
+        #region Ctor
         internal MouseWatcher(KeyMouseFactory factory)
         {
             this.Factory = factory;
         }
 
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            this.Unsubscribe();
+        }
+        #endregion
+
+        #region Methods
         /// <summary>
         /// Start watching mouse events
         /// </summary>
@@ -54,16 +72,38 @@ namespace Loamen.KeyMouseHook
             }
         }
 
+        /// <summary>
+        /// Enable mouse drag started and finised event or double click event
+        /// </summary>
+        /// <param name="macroEventType">MacroEventType.MouseDragStarted | MacroEventType.MouseDoubleClick</param>
+        /// <returns></returns>
+        public MouseWatcher Enable(MacroEventType macroEventType)
+        {
+            if ((macroEventType & MacroEventType.MouseDoubleClick) > 0)
+                this.enableMouseDoubleClick = true;
+            if ((macroEventType & MacroEventType.MouseDragFinished) > 0)
+                this.enableMouseDrag = true;
+            if ((macroEventType & MacroEventType.MouseDragStarted) > 0)
+                this.enableMouseDrag = true;
+            return this;
+        }
+
         private void Subscribe(IKeyboardMouseEvents events = null)
         {
             if (events != null) this.Factory.KeyboardMouseEvents = events;
 
             this.Factory.KeyboardMouseEvents.MouseUp += OnMouseUp;
-            this.Factory.KeyboardMouseEvents.MouseDoubleClick += OnMouseDoubleClick;
-            this.Factory.KeyboardMouseEvents.MouseMove += HookManager_MouseMove;
-            this.Factory.KeyboardMouseEvents.MouseWheel += HookManager_MouseWheel;
+            this.Factory.KeyboardMouseEvents.MouseMove += OnMouseMove;
+            this.Factory.KeyboardMouseEvents.MouseWheel += OnMouseWheel;
             this.Factory.KeyboardMouseEvents.MouseDown += OnMouseDown;
 
+            if (enableMouseDrag)
+            {
+                this.Factory.KeyboardMouseEvents.MouseDragStarted += OnMouseDragStarted;
+                this.Factory.KeyboardMouseEvents.MouseDragFinished += OnMouseDragFinished;
+            }
+            if (enableMouseDoubleClick)
+                this.Factory.KeyboardMouseEvents.MouseDoubleClick += OnMouseDoubleClick;
         }
 
         private void Unsubscribe()
@@ -71,10 +111,17 @@ namespace Loamen.KeyMouseHook
             if (this.Factory.KeyboardMouseEvents == null) return;
 
             this.Factory.KeyboardMouseEvents.MouseUp -= OnMouseUp;
-            this.Factory.KeyboardMouseEvents.MouseDoubleClick -= OnMouseDoubleClick;
-            this.Factory.KeyboardMouseEvents.MouseMove -= HookManager_MouseMove;
-            this.Factory.KeyboardMouseEvents.MouseWheel -= HookManager_MouseWheel;
+            this.Factory.KeyboardMouseEvents.MouseMove -= OnMouseMove;
+            this.Factory.KeyboardMouseEvents.MouseWheel -= OnMouseWheel;
             this.Factory.KeyboardMouseEvents.MouseDown -= OnMouseDown;
+
+            if (enableMouseDrag)
+            {
+                this.Factory.KeyboardMouseEvents.MouseDragStarted -= OnMouseDragStarted;
+                this.Factory.KeyboardMouseEvents.MouseDragFinished -= OnMouseDragFinished;
+            }
+            if (enableMouseDoubleClick)
+                this.Factory.KeyboardMouseEvents.MouseDoubleClick -= OnMouseDoubleClick;
         }
 
         public void SupressMouse(bool isSupress, MacroEventType eventType)
@@ -87,19 +134,19 @@ namespace Loamen.KeyMouseHook
                 {
                     case MacroEventType.MouseDown:
                         this.Factory.KeyboardMouseEvents.MouseDown -= OnMouseDown;
-                        this.Factory.KeyboardMouseEvents.MouseDownExt += KeyboardMouseEvents_MouseDownExt;
+                        this.Factory.KeyboardMouseEvents.MouseDownExt += OnMouseDownExt;
                         break;
                     case MacroEventType.MouseUp:
                         this.Factory.KeyboardMouseEvents.MouseUpExt -= OnMouseUp;
-                        this.Factory.KeyboardMouseEvents.MouseUpExt += KeyboardMouseEvents_MouseUpExt;
+                        this.Factory.KeyboardMouseEvents.MouseUpExt += OnMouseUpExt;
                         break;
                     case MacroEventType.MouseMove:
-                        this.Factory.KeyboardMouseEvents.MouseMove -= HookManager_MouseMove;
-                        this.Factory.KeyboardMouseEvents.MouseMoveExt += KeyboardMouseEvents_MouseMoveExt;
+                        this.Factory.KeyboardMouseEvents.MouseMove -= OnMouseMove;
+                        this.Factory.KeyboardMouseEvents.MouseMoveExt += OnMouseMoveExt;
                         break;
                     case MacroEventType.MouseWheel:
-                        this.Factory.KeyboardMouseEvents.MouseWheel -= HookManager_MouseWheel;
-                        this.Factory.KeyboardMouseEvents.MouseWheelExt += KeyboardMouseEvents_MouseWheelExt;
+                        this.Factory.KeyboardMouseEvents.MouseWheel -= OnMouseWheel;
+                        this.Factory.KeyboardMouseEvents.MouseWheelExt += OnMouseWheelExt;
                         break;
                     default:
                         break;
@@ -111,27 +158,49 @@ namespace Loamen.KeyMouseHook
                 {
                     case MacroEventType.MouseDown:
                         this.Factory.KeyboardMouseEvents.MouseDown += OnMouseDown;
-                        this.Factory.KeyboardMouseEvents.MouseDownExt -= KeyboardMouseEvents_MouseDownExt;
+                        this.Factory.KeyboardMouseEvents.MouseDownExt -= OnMouseDownExt;
                         break;
                     case MacroEventType.MouseUp:
                         this.Factory.KeyboardMouseEvents.MouseUpExt += OnMouseUp;
-                        this.Factory.KeyboardMouseEvents.MouseUpExt -= KeyboardMouseEvents_MouseUpExt;
+                        this.Factory.KeyboardMouseEvents.MouseUpExt -= OnMouseUpExt;
                         break;
                     case MacroEventType.MouseMove:
-                        this.Factory.KeyboardMouseEvents.MouseMove += HookManager_MouseMove;
-                        this.Factory.KeyboardMouseEvents.MouseMoveExt -= KeyboardMouseEvents_MouseMoveExt;
+                        this.Factory.KeyboardMouseEvents.MouseMove += OnMouseMove;
+                        this.Factory.KeyboardMouseEvents.MouseMoveExt -= OnMouseMoveExt;
                         break;
                     case MacroEventType.MouseWheel:
-                        this.Factory.KeyboardMouseEvents.MouseWheel += HookManager_MouseWheel;
-                        this.Factory.KeyboardMouseEvents.MouseWheelExt -= KeyboardMouseEvents_MouseWheelExt;
+                        this.Factory.KeyboardMouseEvents.MouseWheel += OnMouseWheel;
+                        this.Factory.KeyboardMouseEvents.MouseWheelExt -= OnMouseWheelExt;
                         break;
                     default:
                         break;
                 }
             }
         }
+        #endregion
 
-        private void KeyboardMouseEvents_MouseMoveExt(object sender, MouseEventExtArgs e)
+        #region Mouse Events
+        private void OnMouseDragFinished(object sender, MouseEventArgs e)
+        {
+            if (isRunning)
+            {
+                var time = Environment.TickCount - lastTimeRecorded;
+                KListener_KeyDown(new MacroEvent(MacroEventType.MouseDragFinished, e, time));
+                Debug.WriteLine("MouseDragStarted");
+            }
+        }
+
+        private void OnMouseDragStarted(object sender, MouseEventArgs e)
+        {
+            if (isRunning)
+            {
+                var time = Environment.TickCount - lastTimeRecorded;
+                KListener_KeyDown(new MacroEvent(MacroEventType.MouseDragStarted, e, time));
+                Debug.WriteLine("MouseDragFinished");
+            }
+        }
+
+        private void OnMouseMoveExt(object sender, MouseEventExtArgs e)
         {
             if (isRunning)
             {
@@ -141,7 +210,7 @@ namespace Loamen.KeyMouseHook
             }
         }
 
-        private void KeyboardMouseEvents_MouseWheelExt(object sender, MouseEventExtArgs e)
+        private void OnMouseWheelExt(object sender, MouseEventExtArgs e)
         {
             if (isRunning)
             {
@@ -151,7 +220,7 @@ namespace Loamen.KeyMouseHook
             }
         }
 
-        private void KeyboardMouseEvents_MouseUpExt(object sender, MouseEventExtArgs e)
+        private void OnMouseUpExt(object sender, MouseEventExtArgs e)
         {
             if (isRunning)
             {
@@ -161,7 +230,7 @@ namespace Loamen.KeyMouseHook
             }
         }
 
-        private void KeyboardMouseEvents_MouseDownExt(object sender, MouseEventExtArgs e)
+        private void OnMouseDownExt(object sender, MouseEventExtArgs e)
         {
             if (isRunning)
             {
@@ -171,7 +240,7 @@ namespace Loamen.KeyMouseHook
             }
         }
 
-        private void HookManager_MouseMove(object sender, MouseEventArgs e)
+        private void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (isRunning)
             {
@@ -211,7 +280,7 @@ namespace Loamen.KeyMouseHook
             }
         }
 
-        private void HookManager_MouseWheel(object sender, MouseEventArgs e)
+        private void OnMouseWheel(object sender, MouseEventArgs e)
         {
             if (isRunning)
             {
@@ -230,13 +299,6 @@ namespace Loamen.KeyMouseHook
             lastTimeRecorded = Environment.TickCount;
             OnMouseInput?.Invoke(null, e);
         }
-
-        /// <summary>
-        /// Dispose
-        /// </summary>
-        public void Dispose()
-        {
-            this.Unsubscribe();
-        }
+        #endregion
     }
 }
