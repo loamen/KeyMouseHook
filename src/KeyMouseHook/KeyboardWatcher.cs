@@ -60,8 +60,18 @@ namespace Loamen.KeyMouseHook
 
             this.Factory.KeyboardMouseEvents.KeyDown += OnKeyDown;
             this.Factory.KeyboardMouseEvents.KeyUp += OnKeyUp;
+            this.Factory.KeyboardMouseEvents.KeyPress += OnKeyPress;
         }
 
+        private void OnKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (isRunning)
+            {
+                var time = Environment.TickCount - lastTimeRecorded;
+                KListener_KeyDown(new MacroEvent(MacroEventType.KeyPress, e, time));
+                Debug.WriteLine(string.Format("KeyPress  \t\t {0}\n", e.KeyChar));
+            }
+        }
 
         internal void Unsubscribe()
         {
@@ -69,6 +79,7 @@ namespace Loamen.KeyMouseHook
 
             this.Factory.KeyboardMouseEvents.KeyDown -= OnKeyDown;
             this.Factory.KeyboardMouseEvents.KeyUp -= OnKeyUp;
+            this.Factory.KeyboardMouseEvents.KeyPress -= OnKeyPress;
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

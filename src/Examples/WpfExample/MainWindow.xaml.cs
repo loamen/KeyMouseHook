@@ -35,12 +35,18 @@ namespace WpfExample
             keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
             keyboardWatcher.OnKeyboardInput += (s, e) =>
             {
-                var keyEvent = (System.Windows.Forms.KeyEventArgs)e.EventArgs;
-                Log(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyCode, e.KeyMouseEventType));
-
                 if (_macroEvents != null)
-                {
                     _macroEvents.Add(e);
+
+                if (e.KeyMouseEventType == MacroEventType.KeyPress)
+                {
+                    var keyEvent = (KeyPressEventArgs)e.EventArgs;
+                    Log(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyChar, e.KeyMouseEventType));
+                }
+                else
+                {
+                    var keyEvent = (System.Windows.Forms.KeyEventArgs)e.EventArgs;
+                    Log(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyCode, e.KeyMouseEventType));
                 }
             };
 

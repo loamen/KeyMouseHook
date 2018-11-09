@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinformExample", "Examples\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfExample", "Examples\WpfExample\WpfExample.csproj", "{EB003F9A-66D6-4A1E-9777-0D38C24FEC51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleExample", "Examples\ConsoleExample\ConsoleExample.csproj", "{8C561730-2800-4C20-BBC4-D5B7F3631C37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{4CB8AA4E-1011-4B4F-9F17-E6FC1207B5EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,18 @@ Global
 		{EB003F9A-66D6-4A1E-9777-0D38C24FEC51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB003F9A-66D6-4A1E-9777-0D38C24FEC51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB003F9A-66D6-4A1E-9777-0D38C24FEC51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C561730-2800-4C20-BBC4-D5B7F3631C37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C561730-2800-4C20-BBC4-D5B7F3631C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C561730-2800-4C20-BBC4-D5B7F3631C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C561730-2800-4C20-BBC4-D5B7F3631C37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{219EA77D-DB1F-4414-A3C9-CFC509A553AA} = {4CB8AA4E-1011-4B4F-9F17-E6FC1207B5EC}
+		{EB003F9A-66D6-4A1E-9777-0D38C24FEC51} = {4CB8AA4E-1011-4B4F-9F17-E6FC1207B5EC}
+		{8C561730-2800-4C20-BBC4-D5B7F3631C37} = {4CB8AA4E-1011-4B4F-9F17-E6FC1207B5EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6A4E6495-A0B0-4115-A1CD-029B13D6331A}

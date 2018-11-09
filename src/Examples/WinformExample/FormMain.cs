@@ -31,12 +31,18 @@ namespace WinformExample
             keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
             keyboardWatcher.OnKeyboardInput += (s, e) =>
             {
-                var keyEvent = (KeyEventArgs)e.EventArgs;
-                Log(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyCode, e.KeyMouseEventType));
-
                 if (_macroEvents != null)
-                {
                     _macroEvents.Add(e);
+
+                if (e.KeyMouseEventType == MacroEventType.KeyPress)
+                {
+                    var keyEvent = (KeyPressEventArgs)e.EventArgs;
+                    Log(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyChar, e.KeyMouseEventType));
+                }
+                else
+                {
+                    var keyEvent = (KeyEventArgs)e.EventArgs;
+                    Log(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyCode, e.KeyMouseEventType));
                 }
             };
 
@@ -44,9 +50,8 @@ namespace WinformExample
             mouseWatcher.OnMouseInput += (s, e) =>
             {
                 if (_macroEvents != null)
-                {
                     _macroEvents.Add(e);
-                }
+
                 switch (e.KeyMouseEventType)
                 {
                     case MacroEventType.MouseMove:

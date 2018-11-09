@@ -40,7 +40,8 @@ namespace Loamen.KeyMouseHook
         MouseWheelExt,
         MouseDoubleClick,
         KeyDown,
-        KeyUp
+        KeyUp,
+        KeyPress
     }
 
     public static class PointConvertor
