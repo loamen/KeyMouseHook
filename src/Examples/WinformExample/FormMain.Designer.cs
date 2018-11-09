@@ -218,6 +218,7 @@
             this.Controls.Add(this.textBoxLog);
             this.Controls.Add(this.groupBox2);
             this.Name = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mouse and Keyboard Hooks And Simulators Demo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);

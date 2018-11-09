@@ -118,9 +118,11 @@ namespace WpfExample
 
         private void btnPlayback_Click(object sender, RoutedEventArgs e)
         {
+            btnPlayback.IsEnabled = false;
             var sim = new InputSimulator();
             //var sim = new KeyMouseSimulator();
             sim.PlayBack(_macroEvents);
+            btnPlayback.IsEnabled = true;
         }
 
         private void btnClearLog_Click(object sender, RoutedEventArgs e)

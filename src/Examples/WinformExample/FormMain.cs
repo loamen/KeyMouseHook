@@ -161,9 +161,11 @@ namespace WinformExample
 
         private void btnPlayback_Click(object sender, EventArgs e)
         {
+            btnPlayback.Enabled = false;
             var sim = new InputSimulator();
             //var sim = new KeyMouseSimulator();
             sim.PlayBack(_macroEvents);
+            btnPlayback.Enabled = true;
         }
 
         private void btnClearLog_Click(object sender, EventArgs e)
