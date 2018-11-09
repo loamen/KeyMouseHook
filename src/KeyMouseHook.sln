@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyMouseHook", "KeyMouseHoo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinformExample", "Examples\WinformExample\WinformExample.csproj", "{219EA77D-DB1F-4414-A3C9-CFC509A553AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfExample", "Examples\WpfExample\WpfExample.csproj", "{EB003F9A-66D6-4A1E-9777-0D38C24FEC51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{219EA77D-DB1F-4414-A3C9-CFC509A553AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{219EA77D-DB1F-4414-A3C9-CFC509A553AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{219EA77D-DB1F-4414-A3C9-CFC509A553AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB003F9A-66D6-4A1E-9777-0D38C24FEC51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB003F9A-66D6-4A1E-9777-0D38C24FEC51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB003F9A-66D6-4A1E-9777-0D38C24FEC51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB003F9A-66D6-4A1E-9777-0D38C24FEC51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
