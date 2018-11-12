@@ -21,12 +21,18 @@ namespace WinformExample
         private readonly KeyboardWatcher keyboardWatcher;
         private readonly MouseWatcher mouseWatcher;
         private List<MacroEvent> _macroEvents;
-
+        private Hotkey hotkey;
         private bool isRecording = false;
+        private bool isPlaying = false;
+
+        private int hotkeyRecordId;
+        private int hotkeyPlaybackId;
 
         public FormMain()
         {
             InitializeComponent();
+
+            this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width, Screen.PrimaryScreen.WorkingArea.Height - this.Height);
 
             keyboardWatcher = eventHookFactory.GetKeyboardWatcher().Enable(MacroEventType.KeyPress);
             keyboardWatcher.OnKeyboardInput += (s, e) =>
@@ -119,6 +125,7 @@ namespace WinformExample
 
         public void StartWatch(IKeyboardMouseEvents events = null)
         {
+            Thread.Sleep(1000);
             _macroEvents = new List<MacroEvent>();
             keyboardWatcher.Start(events);
             mouseWatcher.Start(events);
@@ -132,6 +139,39 @@ namespace WinformExample
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            InitHotkey();
+        }
+
+        private void InitHotkey()
+        {
+            hotkey = new Hotkey(this.Handle);
+            hotkey.OnHotkey += Hotkey_OnHotkey;
+            this.hotkeyRecordId = hotkey.RegisterHotkey(Keys.F10, Hotkey.KeyFlags.MOD_CONTROL);
+            this.hotkeyPlaybackId = hotkey.RegisterHotkey(Keys.F11, Hotkey.KeyFlags.MOD_CONTROL);
+
+            #region Combination
+            //var record = Combination.TriggeredBy(Keys.F10).With(Keys.Control);
+            //var playback = Combination.TriggeredBy(Keys.F12).With(Keys.Control);
+
+            //var assignment = new Dictionary<Combination, Action>
+            //{
+            //    {record, ()=>{this.Record(); Debug.WriteLine("Control+F10"); } },
+            //    {playback,  ()=>{this.Playback(); Debug.WriteLine("Control+F12"); }}
+            //};
+
+            //Hook.GlobalEvents().OnCombination(assignment);
+            #endregion
+        }
+
+        private void Hotkey_OnHotkey(int HotKeyID)
+        {
+            if (HotKeyID == hotkeyRecordId)
+            {
+                if (isPlaying) return;
+                this.Record();
+            }
+            else if (HotKeyID == hotkeyPlaybackId)
+                this.Playback();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -142,34 +182,12 @@ namespace WinformExample
 
         private void btnRecord_Click(object sender, EventArgs e)
         {
-            if (!isRecording)
-            {
-                if (radioApplication.Checked)
-                    StartWatch(Hook.AppEvents());
-                else if (radioGlobal.Checked)
-                    StartWatch(Hook.GlobalEvents());
-                isRecording = true;
-                btnRecord.Text = "Stop";
-            }
-            else
-            {
-                StopWatch();
-                isRecording = false;
-                btnRecord.Text = "Record";
-                if (_macroEvents != null && _macroEvents.Count > 0)
-                {
-                    btnPlayback.Enabled = true;
-                }
-            }
+            Record();
         }
 
         private void btnPlayback_Click(object sender, EventArgs e)
         {
-            btnPlayback.Enabled = false;
-            var sim = new InputSimulator().Enable(MacroEventType.KeyDown | MacroEventType.MouseDown);
-            //var sim = new KeyMouseSimulator();
-            sim.PlayBack(_macroEvents);
-            btnPlayback.Enabled = true;
+            Playback();
         }
 
         private void btnClearLog_Click(object sender, EventArgs e)
@@ -203,6 +221,45 @@ namespace WinformExample
             if (eventHookFactory.KeyboardMouseEvents == null) return;
 
             mouseWatcher.SupressMouse(((CheckBox)sender).Checked, MacroEventType.MouseWheel);
+        }
+
+        private void Record()
+        {
+            if (!isRecording)
+            {
+                if (radioApplication.Checked)
+                    StartWatch(Hook.AppEvents());
+                else if (radioGlobal.Checked)
+                    StartWatch(Hook.GlobalEvents());
+                isRecording = true;
+                btnRecord.Text = "Stop(Ctrl+F10)";
+            }
+            else
+            {
+                StopWatch();
+                isRecording = false;
+                btnRecord.Text = "Record(Ctrl+F10)";
+                if (_macroEvents != null && _macroEvents.Count > 0)
+                {
+                    btnPlayback.Enabled = true;
+                }
+            }
+        }
+
+        private void Playback()
+        {
+            this.isPlaying = true;
+            btnPlayback.Enabled = false;
+            var sim = new InputSimulator().Enable(MacroEventType.KeyDown | MacroEventType.MouseDown);
+            //var sim = new KeyMouseSimulator();
+            sim.PlayBack(_macroEvents);
+            btnPlayback.Enabled = true;
+            var timer = new System.Threading.Timer(new TimerCallback(SetPlaying), false, 2000, 2000);
+        }
+
+        private void SetPlaying(object state)
+        {
+            isPlaying = (bool)state;
         }
     }
 }

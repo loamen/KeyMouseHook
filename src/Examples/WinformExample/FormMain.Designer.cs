@@ -64,7 +64,7 @@
             this.panelSeparator.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelSeparator.Location = new System.Drawing.Point(6, 34);
             this.panelSeparator.Name = "panelSeparator";
-            this.panelSeparator.Size = new System.Drawing.Size(584, 1);
+            this.panelSeparator.Size = new System.Drawing.Size(358, 1);
             this.panelSeparator.TabIndex = 11;
             // 
             // radioGlobal
@@ -95,11 +95,10 @@
             // 
             // labelWheel
             // 
-            this.labelWheel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelWheel.AutoSize = true;
             this.labelWheel.BackColor = System.Drawing.Color.White;
             this.labelWheel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelWheel.Location = new System.Drawing.Point(9, 70);
+            this.labelWheel.Location = new System.Drawing.Point(12, 70);
             this.labelWheel.Name = "labelWheel";
             this.labelWheel.Size = new System.Drawing.Size(89, 13);
             this.labelWheel.TabIndex = 6;
@@ -107,11 +106,10 @@
             // 
             // labelMousePosition
             // 
-            this.labelMousePosition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelMousePosition.AutoSize = true;
             this.labelMousePosition.BackColor = System.Drawing.Color.White;
             this.labelMousePosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMousePosition.Location = new System.Drawing.Point(9, 46);
+            this.labelMousePosition.Location = new System.Drawing.Point(12, 46);
             this.labelMousePosition.Name = "labelMousePosition";
             this.labelMousePosition.Size = new System.Drawing.Size(125, 13);
             this.labelMousePosition.TabIndex = 2;
@@ -123,12 +121,12 @@
             this.textBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxLog.Location = new System.Drawing.Point(0, 98);
+            this.textBoxLog.Location = new System.Drawing.Point(0, 124);
             this.textBoxLog.Multiline = true;
             this.textBoxLog.Name = "textBoxLog";
             this.textBoxLog.ReadOnly = true;
             this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxLog.Size = new System.Drawing.Size(602, 215);
+            this.textBoxLog.Size = new System.Drawing.Size(380, 110);
             this.textBoxLog.TabIndex = 10;
             this.textBoxLog.WordWrap = false;
             // 
@@ -151,34 +149,34 @@
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(602, 98);
+            this.groupBox2.Size = new System.Drawing.Size(380, 124);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             // 
             // btnPlayback
             // 
             this.btnPlayback.Enabled = false;
-            this.btnPlayback.Location = new System.Drawing.Point(436, 66);
+            this.btnPlayback.Location = new System.Drawing.Point(110, 94);
             this.btnPlayback.Name = "btnPlayback";
-            this.btnPlayback.Size = new System.Drawing.Size(75, 21);
+            this.btnPlayback.Size = new System.Drawing.Size(109, 21);
             this.btnPlayback.TabIndex = 18;
-            this.btnPlayback.Text = "Playback";
+            this.btnPlayback.Text = "Playback(Ctrl+F12)";
             this.btnPlayback.UseVisualStyleBackColor = true;
             this.btnPlayback.Click += new System.EventHandler(this.btnPlayback_Click);
             // 
             // btnRecord
             // 
-            this.btnRecord.Location = new System.Drawing.Point(356, 66);
+            this.btnRecord.Location = new System.Drawing.Point(12, 94);
             this.btnRecord.Name = "btnRecord";
-            this.btnRecord.Size = new System.Drawing.Size(75, 21);
+            this.btnRecord.Size = new System.Drawing.Size(97, 21);
             this.btnRecord.TabIndex = 17;
-            this.btnRecord.Text = "Record";
+            this.btnRecord.Text = "Record(Ctrl+F10)";
             this.btnRecord.UseVisualStyleBackColor = true;
             this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
             // 
             // btnClearLog
             // 
-            this.btnClearLog.Location = new System.Drawing.Point(515, 66);
+            this.btnClearLog.Location = new System.Drawing.Point(220, 94);
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new System.Drawing.Size(75, 21);
             this.btnClearLog.TabIndex = 16;
@@ -214,12 +212,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(602, 313);
+            this.ClientSize = new System.Drawing.Size(380, 234);
             this.Controls.Add(this.textBoxLog);
             this.Controls.Add(this.groupBox2);
             this.Name = "FormMain";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Mouse and Keyboard Hooks And Simulators Demo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "Mouse&Keyboard Hooks And Simulators Demo";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.groupBox2.ResumeLayout(false);

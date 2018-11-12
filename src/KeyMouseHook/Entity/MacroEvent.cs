@@ -56,8 +56,8 @@ namespace Loamen.KeyMouseHook
         /// <returns></returns>
         public static Point ToAbsolutePoint(this Point point)
         {
-            var CurrentScreenWidth = 65535.0d / Screen.PrimaryScreen.WorkingArea.Width;
-            var CurrentScreenHeight = 65535.0d / Screen.PrimaryScreen.WorkingArea.Height;
+            var CurrentScreenWidth = 65535.0d / Screen.PrimaryScreen.Bounds.Width;
+            var CurrentScreenHeight = 65535.0d / Screen.PrimaryScreen.Bounds.Height;
             var X = CurrentScreenWidth * point.X;
             var Y = CurrentScreenHeight * point.Y;
             return new Point((int)X, (int)Y);
