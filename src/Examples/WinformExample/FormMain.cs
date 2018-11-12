@@ -34,7 +34,7 @@ namespace WinformExample
 
             this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width, Screen.PrimaryScreen.WorkingArea.Height - this.Height);
 
-            keyboardWatcher = eventHookFactory.GetKeyboardWatcher().Enable(MacroEventType.KeyPress);
+            keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
             keyboardWatcher.OnKeyboardInput += (s, e) =>
             {
                 if (_macroEvents != null)
@@ -43,7 +43,7 @@ namespace WinformExample
                 if (e.KeyMouseEventType == MacroEventType.KeyPress)
                 {
                     var keyEvent = (KeyPressEventArgs)e.EventArgs;
-                    Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)keyEvent.KeyChar).ToString());
+                    Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)Char.ToUpper(keyEvent.KeyChar)).ToString());
                     Log(string.Format("Key {0}\t\t{1}\n", key, e.KeyMouseEventType));
                 }
                 else
@@ -251,7 +251,7 @@ namespace WinformExample
         {
             this.isPlaying = true;
             btnPlayback.Enabled = false;
-            var sim = new InputSimulator().Enable(MacroEventType.KeyPress | MacroEventType.MouseDoubleClick);
+            var sim = new InputSimulator().Enable(MacroEventType.MouseDoubleClick);
             //var sim = new KeyMouseSimulator();
             sim.OnPlayback += OnPlayback;
             sim.PlayBack(_macroEvents);
@@ -304,7 +304,7 @@ namespace WinformExample
                     break;
                 case MacroEventType.KeyPress:
                     var keyEvent = (KeyPressEventArgs)e.EventArgs;
-                    Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)keyEvent.KeyChar).ToString());
+                    Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)Char.ToUpper(keyEvent.KeyChar)).ToString());
                     Log(string.Format("Key {0}\t\t{1}\t\tSimulator\n", key, e.KeyMouseEventType));
                     break;
                 case MacroEventType.KeyDown:

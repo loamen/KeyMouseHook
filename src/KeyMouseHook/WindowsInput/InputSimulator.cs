@@ -220,7 +220,7 @@ namespace Loamen.KeyMouseHook
                         case MacroEventType.KeyPress:
                             {
                                 KeyPressEventArgs ergs = (KeyPressEventArgs)mouseKeyEvent.EventArgs;
-                                Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)ergs.KeyChar).ToString());
+                                Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)Char.ToUpper(ergs.KeyChar)).ToString());
                                 this.Keyboard.Sleep(mouseKeyEvent.TimeSinceLastEvent).KeyPress((VirtualKeyCode)((int)key));
                                 KListener_PlayBack(mouseKeyEvent);
                             }
