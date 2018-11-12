@@ -9,10 +9,6 @@ namespace Loamen.KeyMouseHook
     public interface IMouseSimulator
     {
         /// <summary>
-        /// Get or set enable events
-        /// </summary>
-        Dictionary<MacroEventType, bool> EnableEventTypes { get; set; }
-        /// <summary>
         /// Gets the <see cref="IKeyboardSimulator"/> instance for simulating Keyboard input.
         /// </summary>
         /// <value>The <see cref="IKeyboardSimulator"/> instance.</value>
@@ -146,13 +142,5 @@ namespace Loamen.KeyMouseHook
         /// </summary>
         /// <param name="timeout">The time to wait.</param>
         IMouseSimulator Sleep(TimeSpan timeout);
-
-        /// <summary>
-        /// Enable mouse drag started and finised event or double click event
-        /// </summary>
-        /// <param name="macroEventType">MacroEventType.MouseDragStarted | MacroEventType.MouseDoubleClick</param>
-        /// <returns></returns>
-        IMouseSimulator Enable(MacroEventType macroEventType);
-
     }
 }

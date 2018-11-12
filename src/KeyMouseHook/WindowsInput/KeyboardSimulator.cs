@@ -11,7 +11,6 @@ namespace Loamen.KeyMouseHook
     public class KeyboardSimulator : IKeyboardSimulator
     {
         private readonly IInputSimulator _inputSimulator;
-        private Dictionary<MacroEventType, bool> enableEventTypes;
 
         /// <summary>
         /// The instance of the <see cref="IInputMessageDispatcher"/> to use for dispatching <see cref="INPUT"/> messages.
@@ -55,30 +54,6 @@ namespace Loamen.KeyMouseHook
         /// <value>The <see cref="IMouseSimulator"/> instance.</value>
         public IMouseSimulator Mouse { get { return _inputSimulator.Mouse; } }
 
-        /// <summary>
-        /// Get or set enable events
-        /// </summary>
-        public Dictionary<MacroEventType, bool> EnableEventTypes
-        {
-            get
-            {
-                if (enableEventTypes == null)
-                {
-                    enableEventTypes = new Dictionary<MacroEventType, bool>();
-                    foreach (var item in Enum.GetNames(typeof(MacroEventType)))
-                    {
-                        if (item.ToLower().Contains("key"))
-                        {
-                            MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), item);
-                            if (!enableEventTypes.ContainsKey(eventType))
-                                enableEventTypes.Add(eventType, false);
-                        }
-                    }
-                }
-                return enableEventTypes;
-            }
-            set => enableEventTypes = value;
-        }
 
         private void ModifiersDown(InputBuilder builder, IEnumerable<VirtualKeyCode> modifierKeyCodes)
         {
@@ -248,26 +223,6 @@ namespace Loamen.KeyMouseHook
         public IKeyboardSimulator Sleep(TimeSpan timeout)
         {
             Thread.Sleep(timeout);
-            return this;
-        }
-
-        /// <summary>
-        /// Enable keypress event
-        /// </summary>
-        /// <param name="macroEventType"></param>
-        /// <returns></returns>
-        public IKeyboardSimulator Enable(MacroEventType macroEventType)
-        {
-            var names = macroEventType.ToString().Split(',');
-            foreach (var name in names)
-            {
-                MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), name);
-                if (name.ToLower().Contains("key"))
-                {
-                    this.EnableEventTypes[eventType] = true;
-                }
-            }
-
             return this;
         }
     }

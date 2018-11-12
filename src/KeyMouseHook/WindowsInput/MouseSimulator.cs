@@ -11,7 +11,6 @@ namespace Loamen.KeyMouseHook
     public class MouseSimulator : IMouseSimulator
     {
         private const int MouseWheelClickSize = 120;
-        private Dictionary<MacroEventType, bool> enableEventTypes;
         private readonly IInputSimulator _inputSimulator;
 
         /// <summary>
@@ -56,31 +55,6 @@ namespace Loamen.KeyMouseHook
         /// </summary>
         /// <value>The <see cref="IKeyboardSimulator"/> instance.</value>
         public IKeyboardSimulator Keyboard { get { return _inputSimulator.Keyboard; } }
-
-        /// <summary>
-        /// Get or set enable events
-        /// </summary>
-        public Dictionary<MacroEventType, bool> EnableEventTypes
-        {
-            get
-            {
-                if (enableEventTypes == null)
-                {
-                    enableEventTypes = new Dictionary<MacroEventType, bool>();
-                    foreach (var item in Enum.GetNames(typeof(MacroEventType)))
-                    {
-                        if (item.ToLower().Contains("mouse"))
-                        {
-                            MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), item);
-                            if (!enableEventTypes.ContainsKey(eventType))
-                                enableEventTypes.Add(eventType, false);
-                        }
-                    }
-                }
-                return enableEventTypes;
-            }
-            set => enableEventTypes = value;
-        }
 
         /// <summary>
         /// Sends the list of <see cref="INPUT"/> messages using the <see cref="IInputMessageDispatcher"/> instance.
@@ -331,25 +305,6 @@ namespace Loamen.KeyMouseHook
         public IMouseSimulator Sleep(TimeSpan timeout)
         {
             Thread.Sleep(timeout);
-            return this;
-        }
-
-        /// <summary>
-        /// Enable mouse drag started and finised event or double click event
-        /// </summary>
-        /// <param name="macroEventType">MacroEventType.MouseDragStarted | MacroEventType.MouseDoubleClick</param>
-        /// <returns></returns>
-        public IMouseSimulator Enable(MacroEventType macroEventType)
-        {
-            var names = macroEventType.ToString().Split(',');
-            foreach (var name in names)
-            {
-                MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), name);
-                if (name.ToLower().Contains("mouse"))
-                {
-                    this.EnableEventTypes[eventType] = true;
-                }
-            }
             return this;
         }
     }

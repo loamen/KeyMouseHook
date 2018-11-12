@@ -8,6 +8,13 @@ namespace Loamen.KeyMouseHook
     /// </summary>
     public interface IInputSimulator
     {
+        /// <summary>
+        /// Get or set enable events
+        /// </summary>
+        Dictionary<MacroEventType, bool> EnableEventTypes { get; }
+        /// <summary>
+        /// Callback event
+        /// </summary>
         event EventHandler<MacroEvent> OnPlayback;
         /// <summary>
         /// Gets the <see cref="IKeyboardSimulator"/> instance for simulating Keyboard input.

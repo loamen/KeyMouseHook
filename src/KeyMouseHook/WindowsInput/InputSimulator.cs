@@ -13,6 +13,7 @@ namespace Loamen.KeyMouseHook
     public class InputSimulator : IInputSimulator
     {
         public event EventHandler<MacroEvent> OnPlayback;
+        private Dictionary<MacroEventType, bool> enableEventTypes;
         /// <summary>
         /// The <see cref="IKeyboardSimulator"/> instance to use for simulating keyboard input.
         /// </summary>
@@ -46,9 +47,10 @@ namespace Loamen.KeyMouseHook
         /// </summary>
         public InputSimulator()
         {
-            _keyboardSimulator = new KeyboardSimulator(this).Enable(MacroEventType.KeyDown | MacroEventType.KeyUp);
-            _mouseSimulator = new MouseSimulator(this).Enable(MacroEventType.MouseDown | MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel);
+            _keyboardSimulator = new KeyboardSimulator(this);
+            _mouseSimulator = new MouseSimulator(this);
             _inputDeviceState = new WindowsInputDeviceStateAdaptor();
+            this.Enable(MacroEventType.KeyDown | MacroEventType.KeyUp | MacroEventType.MouseDown | MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel); //set playback events
         }
 
         /// <summary>
@@ -70,6 +72,27 @@ namespace Loamen.KeyMouseHook
         }
 
         /// <summary>
+        /// Get or set enable events
+        /// </summary>
+        public Dictionary<MacroEventType, bool> EnableEventTypes
+        {
+            get
+            {
+                if (enableEventTypes == null)
+                {
+                    enableEventTypes = new Dictionary<MacroEventType, bool>();
+                    foreach (var item in Enum.GetNames(typeof(MacroEventType)))
+                    {
+                        MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), item);
+                        if (!enableEventTypes.ContainsKey(eventType))
+                            enableEventTypes.Add(eventType, false);
+                    }
+                }
+                return enableEventTypes;
+            }
+        }
+
+        /// <summary>
         /// Gets the <see cref="IInputDeviceStateAdaptor"/> instance for determining the state of the various input devices.
         /// </summary>
         /// <value>The <see cref="IInputDeviceStateAdaptor"/> instance.</value>
@@ -78,26 +101,24 @@ namespace Loamen.KeyMouseHook
             get { return _inputDeviceState; }
         }
 
+        /// <summary>
+        /// Set which events can be palyed back.The default value is MacroEventType.KeyDown | MacroEventType.KeyUp | MacroEventType.MouseDown | MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel
+        /// </summary>
+        /// <param name="macroEventType"></param>
+        /// <returns></returns>
         public IInputSimulator Enable(MacroEventType macroEventType)
         {
             var names = macroEventType.ToString().Split(',');
             foreach (var name in names)
             {
                 MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), name);
-                if (name.ToLower().Contains("key"))
-                {
-                    this.Keyboard.EnableEventTypes[eventType] = true;
-                }
-                else if (name.ToLower().Contains("mouse"))
-                {
-                    this.Mouse.EnableEventTypes[eventType] = true;
-                }
+                this.EnableEventTypes[eventType] = true;
             }
             return this;
         }
 
         /// <summary>
-        /// simulator keyboard and mouse events
+        /// simulate keyboard and mouse events
         /// </summary>
         /// <param name="mouseKeyEventList"></param>
         public void PlayBack(IList<MacroEvent> mouseKeyEventList)
@@ -109,7 +130,7 @@ namespace Loamen.KeyMouseHook
                 foreach (MacroEvent mouseKeyEvent in mouseKeyEventList)
                 {
                     #region Mouse simulator
-                    if (!this.Keyboard.EnableEventTypes[mouseKeyEvent.KeyMouseEventType]) break;
+                    if (!this.EnableEventTypes[mouseKeyEvent.KeyMouseEventType]) break;
                     switch (mouseKeyEvent.KeyMouseEventType)
                     {
                         case MacroEventType.MouseMove:
