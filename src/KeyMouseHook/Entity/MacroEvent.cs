@@ -27,24 +27,27 @@ namespace Loamen.KeyMouseHook
         }
     }
 
+    /// <summary>
+    /// Event type
+    /// </summary>
     [Serializable]
     [FlagsAttribute]
     public enum MacroEventType
     {
-        MouseMove = 0,
-        MouseMoveExt = 1,
-        MouseDown = 2,
-        MouseDownExt = 4,
-        MouseUp = 8,
-        MouseUpExt = 16,
-        MouseWheel = 32,
-        MouseWheelExt = 64,
-        MouseDragStarted = 128,
-        MouseDragFinished = 256,
-        MouseDoubleClick = 512,
-        KeyDown = 1024,
-        KeyUp = 2048,
-        KeyPress = 4096
+        MouseMove = 1,
+        MouseMoveExt = 2,
+        MouseDown = 4,
+        MouseDownExt = 8,
+        MouseUp = 16,
+        MouseUpExt = 32,
+        MouseWheel = 64,
+        MouseWheelExt = 128,
+        MouseDragStarted = 256,
+        MouseDragFinished = 512,
+        MouseDoubleClick = 1024,
+        KeyDown = 2048,
+        KeyUp = 4096,
+        KeyPress = 8192
     }
 
     public static class PointConvertor
