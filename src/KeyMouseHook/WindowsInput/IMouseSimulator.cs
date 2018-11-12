@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Loamen.KeyMouseHook
 {
@@ -7,6 +8,10 @@ namespace Loamen.KeyMouseHook
     /// </summary>
     public interface IMouseSimulator
     {
+        /// <summary>
+        /// Get or set enable events
+        /// </summary>
+        Dictionary<MacroEventType, bool> EnableEventTypes { get; set; }
         /// <summary>
         /// Gets the <see cref="IKeyboardSimulator"/> instance for simulating Keyboard input.
         /// </summary>
@@ -75,6 +80,26 @@ namespace Loamen.KeyMouseHook
         IMouseSimulator RightButtonDoubleClick();
 
         /// <summary>
+        /// Simulates a mouse middle button down gesture.
+        /// </summary>
+        IMouseSimulator MiddleButtonDown();
+
+        /// <summary>
+        /// Simulates a mouse middle button up gesture.
+        /// </summary>
+        IMouseSimulator MiddleButtonUp();
+
+        /// <summary>
+        /// Simulates a mouse middle button click gesture.
+        /// </summary>
+        IMouseSimulator MiddleButtonClick();
+
+        /// <summary>
+        /// Simulates a mouse middle button double-click gesture.
+        /// </summary>
+        IMouseSimulator MiddleButtonDoubleClick();
+
+        /// <summary>
         /// Simulates a mouse X button down gesture.
         /// </summary>
         /// <param name="buttonId">The button id.</param>
@@ -121,5 +146,13 @@ namespace Loamen.KeyMouseHook
         /// </summary>
         /// <param name="timeout">The time to wait.</param>
         IMouseSimulator Sleep(TimeSpan timeout);
+
+        /// <summary>
+        /// Enable mouse drag started and finised event or double click event
+        /// </summary>
+        /// <param name="macroEventType">MacroEventType.MouseDragStarted | MacroEventType.MouseDoubleClick</param>
+        /// <returns></returns>
+        IMouseSimulator Enable(MacroEventType macroEventType);
+
     }
 }

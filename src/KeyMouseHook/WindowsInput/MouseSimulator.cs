@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Loamen.KeyMouseHook.Native;
 
@@ -10,7 +11,7 @@ namespace Loamen.KeyMouseHook
     public class MouseSimulator : IMouseSimulator
     {
         private const int MouseWheelClickSize = 120;
-
+        private Dictionary<MacroEventType, bool> enableEventTypes;
         private readonly IInputSimulator _inputSimulator;
 
         /// <summary>
@@ -55,6 +56,31 @@ namespace Loamen.KeyMouseHook
         /// </summary>
         /// <value>The <see cref="IKeyboardSimulator"/> instance.</value>
         public IKeyboardSimulator Keyboard { get { return _inputSimulator.Keyboard; } }
+
+        /// <summary>
+        /// Get or set enable events
+        /// </summary>
+        public Dictionary<MacroEventType, bool> EnableEventTypes
+        {
+            get
+            {
+                if (enableEventTypes == null)
+                {
+                    enableEventTypes = new Dictionary<MacroEventType, bool>();
+                    foreach (var item in Enum.GetNames(typeof(MacroEventType)))
+                    {
+                        if (item.ToLower().Contains("mouse"))
+                        {
+                            MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), item);
+                            if (!enableEventTypes.ContainsKey(eventType))
+                                enableEventTypes.Add(eventType, false);
+                        }
+                    }
+                }
+                return enableEventTypes;
+            }
+            set => enableEventTypes = value;
+        }
 
         /// <summary>
         /// Sends the list of <see cref="INPUT"/> messages using the <see cref="IInputMessageDispatcher"/> instance.
@@ -182,6 +208,47 @@ namespace Loamen.KeyMouseHook
         }
 
         /// <summary>
+        /// Simulates a mouse middle button down gesture.
+        /// </summary>
+        public IMouseSimulator MiddleButtonDown()
+        {
+            var inputList = new InputBuilder().AddMouseButtonDown(MouseButton.MiddleButton).ToArray();
+            SendSimulatedInput(inputList);
+            return this;
+        }
+
+        /// <summary>
+        /// Simulates a mouse middle button up gesture.
+        /// </summary>
+        public IMouseSimulator MiddleButtonUp()
+        {
+            var inputList = new InputBuilder().AddMouseButtonUp(MouseButton.MiddleButton).ToArray();
+            SendSimulatedInput(inputList);
+            return this;
+        }
+
+        /// <summary>
+        /// Simulates a mouse middle button click gesture.
+        /// </summary>
+        public IMouseSimulator MiddleButtonClick()
+        {
+            var inputList = new InputBuilder().AddMouseButtonClick(MouseButton.MiddleButton).ToArray();
+            SendSimulatedInput(inputList);
+            return this;
+        }
+
+
+        /// <summary>
+        /// Simulates a mouse middle button double-click gesture.
+        /// </summary>
+        public IMouseSimulator MiddleButtonDoubleClick()
+        {
+            var inputList = new InputBuilder().AddMouseButtonDoubleClick(MouseButton.MiddleButton).ToArray();
+            SendSimulatedInput(inputList);
+            return this;
+        }
+
+        /// <summary>
         /// Simulates a mouse X button down gesture.
         /// </summary>
         /// <param name="buttonId">The button id.</param>
@@ -264,6 +331,22 @@ namespace Loamen.KeyMouseHook
         public IMouseSimulator Sleep(TimeSpan timeout)
         {
             Thread.Sleep(timeout);
+            return this;
+        }
+
+        /// <summary>
+        /// Enable mouse drag started and finised event or double click event
+        /// </summary>
+        /// <param name="macroEventType">MacroEventType.MouseDragStarted | MacroEventType.MouseDoubleClick</param>
+        /// <returns></returns>
+        public IMouseSimulator Enable(MacroEventType macroEventType)
+        {
+            if ((macroEventType & MacroEventType.MouseDoubleClick) == MacroEventType.MouseDoubleClick)
+                this.EnableEventTypes[MacroEventType.MouseDoubleClick] = true;
+            if ((macroEventType & MacroEventType.MouseDragFinished) == MacroEventType.MouseDragFinished)
+                this.EnableEventTypes[MacroEventType.MouseDragFinished] = true;
+            if ((macroEventType & MacroEventType.MouseDragStarted) == MacroEventType.MouseDragStarted)
+                this.EnableEventTypes[MacroEventType.MouseDragStarted] = true;
             return this;
         }
     }

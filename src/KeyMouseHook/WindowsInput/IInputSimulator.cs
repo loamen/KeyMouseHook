@@ -1,4 +1,6 @@
-﻿namespace Loamen.KeyMouseHook
+﻿using System.Collections.Generic;
+
+namespace Loamen.KeyMouseHook
 {
     /// <summary>
     /// The contract for a service that simulates Keyboard and Mouse input and Hardware Input Device state detection for the Windows Platform.
@@ -22,5 +24,9 @@
         /// </summary>
         /// <value>The <see cref="IInputDeviceStateAdaptor"/> instance.</value>
         IInputDeviceStateAdaptor InputDeviceState { get; }
+
+        IInputSimulator Enable(MacroEventType macroEventType);
+
+        void PlayBack(IList<MacroEvent> mouseKeyEventList);
     }
 }

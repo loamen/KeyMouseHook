@@ -89,6 +89,10 @@ namespace WinformExample
                     case MacroEventType.MouseDragFinished:
                         Log("MouseDragFinished\n");
                         break;
+                    case MacroEventType.MouseDoubleClick:
+                        mouseEvent = (MouseEventArgs)e.EventArgs;
+                        Log(string.Format("Mouse {0}\t\t{1}\n", mouseEvent.Button, e.KeyMouseEventType));
+                        break;
                     default:
                         break;
                 }
@@ -162,7 +166,7 @@ namespace WinformExample
         private void btnPlayback_Click(object sender, EventArgs e)
         {
             btnPlayback.Enabled = false;
-            var sim = new InputSimulator();
+            var sim = new InputSimulator().Enable(MacroEventType.KeyDown | MacroEventType.MouseDown);
             //var sim = new KeyMouseSimulator();
             sim.PlayBack(_macroEvents);
             btnPlayback.Enabled = true;

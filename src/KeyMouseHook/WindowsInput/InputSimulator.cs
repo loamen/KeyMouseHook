@@ -1,7 +1,9 @@
 ﻿using Loamen.KeyMouseHook.Native;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace Loamen.KeyMouseHook
 {
@@ -75,7 +77,29 @@ namespace Loamen.KeyMouseHook
             get { return _inputDeviceState; }
         }
 
-        public void PlayBack(List<MacroEvent> mouseKeyEventList)
+        public IInputSimulator Enable(MacroEventType macroEventType)
+        {
+            var names = macroEventType.ToString().Split(',');
+            foreach (var name in names)
+            {
+                MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), name);
+                if (name.ToLower().Contains("key"))
+                {
+                    this.Keyboard.EnableEventTypes[eventType] = true;
+                }
+                else if (name.ToLower().Contains("mouse"))
+                {
+                    this.Mouse.EnableEventTypes[eventType] = true;
+                }
+            }
+            return this;
+        }
+
+        /// <summary>
+        /// simulator keyboard and mouse events
+        /// </summary>
+        /// <param name="mouseKeyEventList"></param>
+        public void PlayBack(IList<MacroEvent> mouseKeyEventList)
         {
             if (mouseKeyEventList == null || mouseKeyEventList.Count == 0) return;
 
@@ -105,6 +129,10 @@ namespace Loamen.KeyMouseHook
                                 {
                                     this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonDown();
                                 }
+                                else if (e.Button == MouseButtons.Middle)
+                                {
+                                    this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonDown();
+                                }
                             }
                             break;
                         case MacroEventType.MouseUp:
@@ -117,6 +145,28 @@ namespace Loamen.KeyMouseHook
                                 else if (e.Button == MouseButtons.Right)
                                 {
                                     this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonUp();
+                                }
+                                else if (e.Button == MouseButtons.Middle)
+                                {
+                                    this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonUp();
+                                }
+                            }
+                            break;
+                        case MacroEventType.MouseDoubleClick:
+                            {
+                                if (this.Keyboard.EnableEventTypes[MacroEventType.MouseDoubleClick]) break;
+                                MouseEventArgs e = (MouseEventArgs)mouseKeyEvent.EventArgs;
+                                if (e.Button == MouseButtons.Left)
+                                {
+                                    this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonDoubleClick();
+                                }
+                                else if (e.Button == MouseButtons.Right)
+                                {
+                                    this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonDoubleClick();
+                                }
+                                else if (e.Button == MouseButtons.Middle)
+                                {
+                                    this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonDoubleClick();
                                 }
                             }
                             break;
@@ -137,6 +187,14 @@ namespace Loamen.KeyMouseHook
                             {
                                 KeyEventArgs ergs = (KeyEventArgs)mouseKeyEvent.EventArgs;
                                 this.Keyboard.Sleep(mouseKeyEvent.TimeSinceLastEvent).KeyUp((VirtualKeyCode)((int)ergs.KeyCode));
+                            }
+                            break;
+                        case MacroEventType.KeyPress:
+                            {
+                                if (this.Keyboard.EnableEventTypes[MacroEventType.KeyPress]) break;
+                                KeyPressEventArgs ergs = (KeyPressEventArgs)mouseKeyEvent.EventArgs;
+                                Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)ergs.KeyChar).ToString());
+                                this.Keyboard.Sleep(mouseKeyEvent.TimeSinceLastEvent).KeyPress((VirtualKeyCode)((int)key));
                             }
                             break;
                         default:
