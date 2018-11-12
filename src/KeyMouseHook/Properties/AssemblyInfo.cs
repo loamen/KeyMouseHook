@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Loamen.com")]
 [assembly: AssemblyProduct("Loamen.KeyMouseHook")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright©Loamen.com 2018")]
 [assembly: AssemblyTrademark("Loamen.com")]
 [assembly: AssemblyCulture("")]
 
