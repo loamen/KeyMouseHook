@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Loamen.KeyMouseHook
 {
@@ -7,6 +8,7 @@ namespace Loamen.KeyMouseHook
     /// </summary>
     public interface IInputSimulator
     {
+        event EventHandler<MacroEvent> OnPlayback;
         /// <summary>
         /// Gets the <see cref="IKeyboardSimulator"/> instance for simulating Keyboard input.
         /// </summary>

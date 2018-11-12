@@ -258,8 +258,15 @@ namespace Loamen.KeyMouseHook
         /// <returns></returns>
         public IKeyboardSimulator Enable(MacroEventType macroEventType)
         {
-            if ((macroEventType & MacroEventType.KeyPress) == MacroEventType.KeyPress)
-                this.EnableEventTypes[macroEventType] = true;
+            var names = macroEventType.ToString().Split(',');
+            foreach (var name in names)
+            {
+                MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), name);
+                if (name.ToLower().Contains("key"))
+                {
+                    this.EnableEventTypes[eventType] = true;
+                }
+            }
 
             return this;
         }

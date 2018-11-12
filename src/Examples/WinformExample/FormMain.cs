@@ -43,7 +43,8 @@ namespace WinformExample
                 if (e.KeyMouseEventType == MacroEventType.KeyPress)
                 {
                     var keyEvent = (KeyPressEventArgs)e.EventArgs;
-                    Log(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyChar, e.KeyMouseEventType));
+                    Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)keyEvent.KeyChar).ToString());
+                    Log(string.Format("Key {0}\t\t{1}\n", key, e.KeyMouseEventType));
                 }
                 else
                 {
@@ -77,10 +78,10 @@ namespace WinformExample
                         MouseEventExtArgs downExtEvent = (MouseEventExtArgs)e.EventArgs;
                         if (downExtEvent.Button != MouseButtons.Right)
                         {
-                            Log(string.Format("Mouse Down \t\t {0}\n", downExtEvent.Button));
+                            Log(string.Format("Mouse Down \t {0}\n", downExtEvent.Button));
                             return;
                         }
-                        Log(string.Format("Mouse Down \t\t {0} Suppressed\n", downExtEvent.Button));
+                        Log(string.Format("Mouse Down \t {0} Suppressed\n", downExtEvent.Button));
                         downExtEvent.Handled = true;
                         break;
                     case MacroEventType.MouseWheelExt:
@@ -147,7 +148,7 @@ namespace WinformExample
             hotkey = new Hotkey(this.Handle);
             hotkey.OnHotkey += Hotkey_OnHotkey;
             this.hotkeyRecordId = hotkey.RegisterHotkey(Keys.F10, Hotkey.KeyFlags.MOD_CONTROL);
-            this.hotkeyPlaybackId = hotkey.RegisterHotkey(Keys.F11, Hotkey.KeyFlags.MOD_CONTROL);
+            this.hotkeyPlaybackId = hotkey.RegisterHotkey(Keys.F12, Hotkey.KeyFlags.MOD_CONTROL);
 
             #region Combination
             //var record = Combination.TriggeredBy(Keys.F10).With(Keys.Control);
@@ -250,11 +251,70 @@ namespace WinformExample
         {
             this.isPlaying = true;
             btnPlayback.Enabled = false;
-            var sim = new InputSimulator().Enable(MacroEventType.KeyDown | MacroEventType.MouseDown);
+            var sim = new InputSimulator().Enable(MacroEventType.KeyPress | MacroEventType.MouseDoubleClick);
             //var sim = new KeyMouseSimulator();
+            sim.OnPlayback += OnPlayback;
             sim.PlayBack(_macroEvents);
             btnPlayback.Enabled = true;
             var timer = new System.Threading.Timer(new TimerCallback(SetPlaying), false, 2000, 2000);
+        }
+
+        private void OnPlayback(object sender, MacroEvent e)
+        {
+            switch (e.KeyMouseEventType)
+            {
+                case MacroEventType.MouseMove:
+                    var mouseEvent = (MouseEventArgs)e.EventArgs;
+                    LogMouseLocation(mouseEvent.X, mouseEvent.Y);
+                    break;
+                case MacroEventType.MouseWheel:
+                    mouseEvent = (MouseEventArgs)e.EventArgs;
+                    LogMouseWheel(mouseEvent.Delta);
+                    break;
+                case MacroEventType.MouseDown:
+                case MacroEventType.MouseUp:
+                    mouseEvent = (MouseEventArgs)e.EventArgs;
+                    Log(string.Format("Mouse {0}\t\t{1}\t\tSimulator\n", mouseEvent.Button, e.KeyMouseEventType));
+                    break;
+                case MacroEventType.MouseDownExt:
+                    MouseEventExtArgs downExtEvent = (MouseEventExtArgs)e.EventArgs;
+                    if (downExtEvent.Button != MouseButtons.Right)
+                    {
+                        Log(string.Format("Mouse Down \t {0}\t\t\tSimulator\n", downExtEvent.Button));
+                        return;
+                    }
+                    Log(string.Format("Mouse Down \t {0} Suppressed.\t\tSimulator\n", downExtEvent.Button));
+                    downExtEvent.Handled = true;
+                    break;
+                case MacroEventType.MouseWheelExt:
+                    MouseEventExtArgs wheelEvent = (MouseEventExtArgs)e.EventArgs;
+                    labelWheel.Text = string.Format("Wheel={0:000}", wheelEvent.Delta);
+                    Log("Mouse Wheel Move Suppressed.\t\tSimulator\n");
+                    wheelEvent.Handled = true;
+                    break;
+                case MacroEventType.MouseDragStarted:
+                    Log("MouseDragStarted\t\tSimulator\n");
+                    break;
+                case MacroEventType.MouseDragFinished:
+                    Log("MouseDragFinished\t\tSimulator\n");
+                    break;
+                case MacroEventType.MouseDoubleClick:
+                    mouseEvent = (MouseEventArgs)e.EventArgs;
+                    Log(string.Format("Mouse {0}\t\t{1}\t\tSimulator\n", mouseEvent.Button, e.KeyMouseEventType));
+                    break;
+                case MacroEventType.KeyPress:
+                    var keyEvent = (KeyPressEventArgs)e.EventArgs;
+                    Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)keyEvent.KeyChar).ToString());
+                    Log(string.Format("Key {0}\t\t{1}\t\tSimulator\n", key, e.KeyMouseEventType));
+                    break;
+                case MacroEventType.KeyDown:
+                case MacroEventType.KeyUp:
+                    var kEvent = (KeyEventArgs)e.EventArgs;
+                    Log(string.Format("Key {0}\t\t{1}\t\tSimulator\n", kEvent.KeyCode, e.KeyMouseEventType));
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void SetPlaying(object state)

@@ -14,7 +14,6 @@ namespace Loamen.KeyMouseHook
         #region Fields
         private readonly object accesslock = new object();
         public event EventHandler<MacroEvent> OnKeyboardInput;
-        private int lastTimeRecorded = 0;
         private bool enableKeyPress = false;
         #endregion
 
@@ -48,7 +47,7 @@ namespace Loamen.KeyMouseHook
             {
                 if (!isRunning)
                 {
-                    lastTimeRecorded = Environment.TickCount;
+                    this.Factory.lastTimeRecorded = Environment.TickCount;
                     Unsubscribe();
                     Subscribe(events);
                     isRunning = true;
@@ -110,8 +109,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.KeyPress, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_KeyEvent(new MacroEvent(MacroEventType.KeyPress, e, time));
                 Debug.WriteLine(string.Format("KeyPress  \t\t {0}\n", e.KeyChar));
             }
         }
@@ -120,8 +119,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.KeyDown, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_KeyEvent(new MacroEvent(MacroEventType.KeyDown, e, time));
                 Debug.WriteLine(string.Format("KeyDown  \t\t {0}\n", e.KeyCode));
             }
         }
@@ -130,8 +129,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.KeyUp, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_KeyEvent(new MacroEvent(MacroEventType.KeyUp, e, time));
                 Debug.WriteLine(string.Format("KeyUp  \t\t {0}\n", e.KeyCode));
             }
         }
@@ -140,9 +139,9 @@ namespace Loamen.KeyMouseHook
         /// Invoke user callbacks with the argument
         /// </summary>
         /// <param name="kd"></param>
-        private void KListener_KeyDown(MacroEvent e)
+        private void KListener_KeyEvent(MacroEvent e)
         {
-            lastTimeRecorded = Environment.TickCount;
+            this.Factory.lastTimeRecorded = Environment.TickCount;
             OnKeyboardInput?.Invoke(null, e);
         }
         #endregion

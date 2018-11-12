@@ -341,12 +341,15 @@ namespace Loamen.KeyMouseHook
         /// <returns></returns>
         public IMouseSimulator Enable(MacroEventType macroEventType)
         {
-            if ((macroEventType & MacroEventType.MouseDoubleClick) == MacroEventType.MouseDoubleClick)
-                this.EnableEventTypes[MacroEventType.MouseDoubleClick] = true;
-            if ((macroEventType & MacroEventType.MouseDragFinished) == MacroEventType.MouseDragFinished)
-                this.EnableEventTypes[MacroEventType.MouseDragFinished] = true;
-            if ((macroEventType & MacroEventType.MouseDragStarted) == MacroEventType.MouseDragStarted)
-                this.EnableEventTypes[MacroEventType.MouseDragStarted] = true;
+            var names = macroEventType.ToString().Split(',');
+            foreach (var name in names)
+            {
+                MacroEventType eventType = (MacroEventType)Enum.Parse(typeof(MacroEventType), name);
+                if (name.ToLower().Contains("mouse"))
+                {
+                    this.EnableEventTypes[eventType] = true;
+                }
+            }
             return this;
         }
     }

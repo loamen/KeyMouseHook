@@ -13,6 +13,7 @@ namespace Loamen.KeyMouseHook
         public IKeyboardMouseEvents KeyboardMouseEvents;
         private MouseWatcher _mouseWatcher;
         private KeyboardWatcher _keyboardWatcher;
+        internal int lastTimeRecorded = 0;
 
         public KeyMouseFactory(IKeyboardMouseEvents events)
         {

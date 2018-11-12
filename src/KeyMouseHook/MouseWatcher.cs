@@ -14,7 +14,6 @@ namespace Loamen.KeyMouseHook
         #region Fields
         private readonly object accesslock = new object();
         public event EventHandler<MacroEvent> OnMouseInput;
-        private int lastTimeRecorded = 0;
         private bool enableMouseDrag = false;
         private bool enableMouseDoubleClick = false;
         #endregion
@@ -49,7 +48,7 @@ namespace Loamen.KeyMouseHook
             {
                 if (!isRunning)
                 {
-                    lastTimeRecorded = Environment.TickCount;
+                    this.Factory.lastTimeRecorded = Environment.TickCount;
                     Unsubscribe();
                     Subscribe(events);
                     isRunning = true;
@@ -184,8 +183,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseDragFinished, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseDragFinished, e, time));
                 Debug.WriteLine("MouseDragStarted");
             }
         }
@@ -194,8 +193,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseDragStarted, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseDragStarted, e, time));
                 Debug.WriteLine("MouseDragFinished");
             }
         }
@@ -204,8 +203,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseMoveExt, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseMoveExt, e, time));
                 Debug.WriteLine(string.Format("MouseMoveExt \t\t {0}\n", e.Button));
             }
         }
@@ -214,8 +213,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseWheelExt, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseWheelExt, e, time));
                 Debug.WriteLine(string.Format("MouseWheelExt \t\t {0}\n", e.Button));
             }
         }
@@ -224,8 +223,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseUpExt, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseUpExt, e, time));
                 Debug.WriteLine(string.Format("MouseUpExt \t\t {0}\n", e.Button));
             }
         }
@@ -234,8 +233,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseDownExt, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseDownExt, e, time));
                 Debug.WriteLine(string.Format("MouseDownExt \t\t {0}\n", e.Button));
             }
         }
@@ -244,8 +243,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseMove, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseMove, e, time));
                 Debug.WriteLine("x={0:0000}; y={1:0000}", e.X, e.Y);
             }
         }
@@ -254,8 +253,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseDown, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseDown, e, time));
                 Debug.WriteLine(string.Format("MouseDown \t\t {0}\n", e.Button));
             }
         }
@@ -264,8 +263,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseUp, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseUp, e, time));
                 Debug.WriteLine(string.Format("MouseUp \t\t {0}\n", e.Button));
             }
         }
@@ -274,8 +273,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseDoubleClick, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseDoubleClick, e, time));
                 Debug.WriteLine(string.Format("MouseDoubleClick \t\t {0}\n", e.Button));
             }
         }
@@ -284,8 +283,8 @@ namespace Loamen.KeyMouseHook
         {
             if (isRunning)
             {
-                var time = Environment.TickCount - lastTimeRecorded;
-                KListener_KeyDown(new MacroEvent(MacroEventType.MouseWheel, e, time));
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseWheel, e, time));
                 Debug.WriteLine("Wheel={0:000}", e.Delta);
             }
         }
@@ -294,9 +293,9 @@ namespace Loamen.KeyMouseHook
         /// Invoke user callbacks with the argument
         /// </summary>
         /// <param name="kd"></param>
-        private void KListener_KeyDown(MacroEvent e)
+        private void KListener_MouseEvent(MacroEvent e)
         {
-            lastTimeRecorded = Environment.TickCount;
+            this.Factory.lastTimeRecorded = Environment.TickCount;
             OnMouseInput?.Invoke(null, e);
         }
         #endregion
