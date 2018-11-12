@@ -89,7 +89,7 @@ private void Playback()
 * [globalmousekeyhook][mousekeyhook-url] (MIT License)
 * [InputSimulator][inputsimulator-url] (MIT License)
 
-## 恭喜代码
+## 贡献代码
 
  - Fork并克隆到本机
  - 创建一个分支并添加你的代码
