@@ -92,7 +92,7 @@ namespace Loamen.KeyMouseHook
         public IInputSimulator Enable(MacroEventType macroEventType)
         {
             this.MacroEventTypes |= macroEventType;
-            return this.Disable(macroEventType);
+            return this;
         }
 
         /// <summary>

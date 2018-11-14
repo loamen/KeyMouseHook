@@ -14,12 +14,13 @@ namespace Loamen.KeyMouseHook
         #region Fields
         private readonly object accesslock = new object();
         public event EventHandler<MacroEvent> OnKeyboardInput;
-        private bool enableKeyPress = false;
+        private MacroEventType macroEventTypes = MacroEventType.KeyDown | MacroEventType.KeyUp;
         #endregion
 
         #region Properties
         private bool isRunning { get; set; }
         private KeyMouseFactory Factory { get; set; }
+        public MacroEventType MacroEventTypes { get => macroEventTypes; set => macroEventTypes = value; }
         #endregion
 
         #region Ctor
@@ -77,9 +78,18 @@ namespace Loamen.KeyMouseHook
         /// <returns></returns>
         public KeyboardWatcher Enable(MacroEventType macroEventType)
         {
-            if ((macroEventType & MacroEventType.KeyPress) > 0)
-                this.enableKeyPress = true;
-          
+            this.MacroEventTypes |= macroEventType;
+            return this;
+        }
+
+        /// <summary>
+        /// disable events
+        /// </summary>
+        /// <param name="macroEventType"></param>
+        /// <returns></returns>
+        public KeyboardWatcher Disable(MacroEventType macroEventType)
+        {
+            this.MacroEventTypes &= ~macroEventType;
             return this;
         }
 
@@ -87,9 +97,11 @@ namespace Loamen.KeyMouseHook
         {
             if (events != null) this.Factory.KeyboardMouseEvents = events;
 
-            this.Factory.KeyboardMouseEvents.KeyDown += OnKeyDown;
-            this.Factory.KeyboardMouseEvents.KeyUp += OnKeyUp;
-            if (enableKeyPress)
+            if ((this.MacroEventTypes & MacroEventType.KeyDown) == MacroEventType.KeyDown)
+                this.Factory.KeyboardMouseEvents.KeyDown += OnKeyDown;
+            if ((this.MacroEventTypes & MacroEventType.KeyUp) == MacroEventType.KeyUp)
+                this.Factory.KeyboardMouseEvents.KeyUp += OnKeyUp;
+            if ((this.MacroEventTypes & MacroEventType.KeyPress) == MacroEventType.KeyPress)
                 this.Factory.KeyboardMouseEvents.KeyPress += OnKeyPress;
         }
 
@@ -97,9 +109,11 @@ namespace Loamen.KeyMouseHook
         {
             if (this.Factory.KeyboardMouseEvents == null) return;
 
-            this.Factory.KeyboardMouseEvents.KeyDown -= OnKeyDown;
-            this.Factory.KeyboardMouseEvents.KeyUp -= OnKeyUp;
-            if (enableKeyPress)
+            if ((this.MacroEventTypes & MacroEventType.KeyDown) == MacroEventType.KeyDown)
+                this.Factory.KeyboardMouseEvents.KeyDown -= OnKeyDown;
+            if ((this.MacroEventTypes & MacroEventType.KeyUp) == MacroEventType.KeyUp)
+                this.Factory.KeyboardMouseEvents.KeyUp -= OnKeyUp;
+            if ((this.MacroEventTypes & MacroEventType.KeyPress) == MacroEventType.KeyPress)
                 this.Factory.KeyboardMouseEvents.KeyPress -= OnKeyPress;
         }
         #endregion

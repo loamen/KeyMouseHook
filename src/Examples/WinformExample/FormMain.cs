@@ -53,7 +53,7 @@ namespace WinformExample
                 }
             };
 
-            mouseWatcher = eventHookFactory.GetMouseWatcher().Enable(MacroEventType.MouseDragStarted | MacroEventType.MouseDoubleClick);
+            mouseWatcher = eventHookFactory.GetMouseWatcher().Enable(MacroEventType.MouseDoubleClick | MacroEventType.MouseDragStarted).Disable(MacroEventType.MouseDragFinished);
             mouseWatcher.OnMouseInput += (s, e) =>
             {
                 if (_macroEvents != null)
