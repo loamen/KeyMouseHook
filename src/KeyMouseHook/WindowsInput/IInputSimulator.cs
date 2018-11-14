@@ -11,7 +11,7 @@ namespace Loamen.KeyMouseHook
         /// <summary>
         /// Get or set enable events
         /// </summary>
-        Dictionary<MacroEventType, bool> EnableEventTypes { get; }
+        MacroEventType MacroEventTypes { get; set; }
         /// <summary>
         /// Callback event
         /// </summary>
