@@ -50,7 +50,7 @@ namespace Loamen.KeyMouseHook
             _keyboardSimulator = new KeyboardSimulator(this);
             _mouseSimulator = new MouseSimulator(this);
             _inputDeviceState = new WindowsInputDeviceStateAdaptor();
-            this.Enable(MacroEventType.KeyDown | MacroEventType.KeyUp | MacroEventType.MouseDown | MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel); //set playback events
+            this.Enable(MacroEventType.KeyDown | MacroEventType.KeyUp | MacroEventType.MouseDown | MacroEventType.MouseUp | MacroEventType.MouseWheel); //set playback events
         }
 
         /// <summary>

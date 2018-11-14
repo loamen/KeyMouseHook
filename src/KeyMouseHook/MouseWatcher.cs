@@ -16,6 +16,7 @@ namespace Loamen.KeyMouseHook
         public event EventHandler<MacroEvent> OnMouseInput;
         private bool enableMouseDrag = false;
         private bool enableMouseDoubleClick = false;
+        private bool enableMouseMove = false;
         #endregion
 
         #region Properties
@@ -78,12 +79,14 @@ namespace Loamen.KeyMouseHook
         /// <returns></returns>
         public MouseWatcher Enable(MacroEventType macroEventType)
         {
-            if ((macroEventType & MacroEventType.MouseDoubleClick) > 0)
+            if ((macroEventType & MacroEventType.MouseDoubleClick) == MacroEventType.MouseDoubleClick)
                 this.enableMouseDoubleClick = true;
-            if ((macroEventType & MacroEventType.MouseDragFinished) > 0)
+            if ((macroEventType & MacroEventType.MouseDragFinished) == MacroEventType.MouseDragFinished)
                 this.enableMouseDrag = true;
-            if ((macroEventType & MacroEventType.MouseDragStarted) > 0)
+            if ((macroEventType & MacroEventType.MouseDragStarted) == MacroEventType.MouseDragStarted)
                 this.enableMouseDrag = true;
+            if ((macroEventType & MacroEventType.MouseMove) == MacroEventType.MouseMove)
+                this.enableMouseMove = true;
             return this;
         }
 
@@ -92,9 +95,12 @@ namespace Loamen.KeyMouseHook
             if (events != null) this.Factory.KeyboardMouseEvents = events;
 
             this.Factory.KeyboardMouseEvents.MouseUp += OnMouseUp;
-            this.Factory.KeyboardMouseEvents.MouseMove += OnMouseMove;
+
             this.Factory.KeyboardMouseEvents.MouseWheel += OnMouseWheel;
             this.Factory.KeyboardMouseEvents.MouseDown += OnMouseDown;
+
+            if (enableMouseMove)
+                this.Factory.KeyboardMouseEvents.MouseMove += OnMouseMove;
 
             if (enableMouseDrag)
             {
@@ -110,9 +116,12 @@ namespace Loamen.KeyMouseHook
             if (this.Factory.KeyboardMouseEvents == null) return;
 
             this.Factory.KeyboardMouseEvents.MouseUp -= OnMouseUp;
-            this.Factory.KeyboardMouseEvents.MouseMove -= OnMouseMove;
+
             this.Factory.KeyboardMouseEvents.MouseWheel -= OnMouseWheel;
             this.Factory.KeyboardMouseEvents.MouseDown -= OnMouseDown;
+
+            if (enableMouseMove)
+                this.Factory.KeyboardMouseEvents.MouseMove -= OnMouseMove;
 
             if (enableMouseDrag)
             {
