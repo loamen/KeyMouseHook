@@ -34,8 +34,24 @@ namespace Loamen.KeyMouseHook
         /// <value>The <see cref="IInputDeviceStateAdaptor"/> instance.</value>
         IInputDeviceStateAdaptor InputDeviceState { get; }
 
+        /// <summary>
+        /// Set which events can be palyed back.The default value is MacroEventType.KeyDown | MacroEventType.KeyUp | MacroEventType.MouseDown | MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel
+        /// </summary>
+        /// <param name="macroEventType"></param>
+        /// <returns></returns>
         IInputSimulator Enable(MacroEventType macroEventType);
 
+        /// <summary>
+        /// disable events
+        /// </summary>
+        /// <param name="macroEventType"></param>
+        /// <returns></returns>
+        IInputSimulator Disable(MacroEventType macroEventType);
+
+        /// <summary>
+        /// Play back
+        /// </summary>
+        /// <param name="mouseKeyEventList"></param>
         void PlayBack(IList<MacroEvent> mouseKeyEventList);
     }
 }

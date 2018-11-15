@@ -55,6 +55,7 @@
     <Compile Include="Simulators\GlobalKeySimulator.cs" />
     <Compile Include="Simulators\KeyMouseSimulator.cs" />
     <Compile Include="Simulators\GlobalMouseSimulator.cs" />
+    <Compile Include="Utils\PointConvertor.cs" />
     <Compile Include="WindowsInput\IInputDeviceStateAdaptor.cs" />
     <Compile Include="WindowsInput\IInputMessageDispatcher.cs" />
     <Compile Include="WindowsInput\IInputSimulator.cs" />

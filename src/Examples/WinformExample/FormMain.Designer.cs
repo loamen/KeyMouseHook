@@ -216,7 +216,6 @@
             this.Controls.Add(this.textBoxLog);
             this.Controls.Add(this.groupBox2);
             this.Name = "FormMain";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Mouse&Keyboard Hooks And Simulators Demo";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
