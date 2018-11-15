@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 using Loamen.KeyMouseHook.Native;
 
@@ -87,6 +88,16 @@ namespace Loamen.KeyMouseHook
             var inputList = new InputBuilder().AddAbsoluteMouseMovement((int)Math.Truncate(absoluteX), (int)Math.Truncate(absoluteY)).ToArray();
             SendSimulatedInput(inputList);
             return this;
+        }
+
+        /// <summary>
+        /// Simulates mouse movement to the specified location on the primary display device.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public IMouseSimulator MoveMouseTo(Point point)
+        {
+            return MoveMouseTo(point.X, point.Y);
         }
 
         /// <summary>

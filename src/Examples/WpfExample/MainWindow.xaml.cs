@@ -121,6 +121,7 @@ namespace WpfExample
             btnPlayback.IsEnabled = false;
             var sim = new InputSimulator();
             //var sim = new KeyMouseSimulator();
+            sim.OnPlayback += OnPlayback;
             sim.PlayBack(_macroEvents);
             btnPlayback.IsEnabled = true;
         }
@@ -192,6 +193,71 @@ namespace WpfExample
         {
             if (eventHookFactory != null)
                 eventHookFactory.Dispose();
+        }
+
+        private void MainWindow1_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.WindowStartupLocation = WindowStartupLocation.Manual;
+            this.Left = Screen.PrimaryScreen.WorkingArea.Width - this.Width - 10;
+            this.Top = this.Height / 2;
+        }
+
+        private void OnPlayback(object sender, MacroEvent e)
+        {
+            switch (e.KeyMouseEventType)
+            {
+                case MacroEventType.MouseMove:
+                    var mouseEvent = (System.Windows.Forms.MouseEventArgs)e.EventArgs;
+                    LogMouseLocation(mouseEvent.X, mouseEvent.Y);
+                    break;
+                case MacroEventType.MouseWheel:
+                    mouseEvent = (System.Windows.Forms.MouseEventArgs)e.EventArgs;
+                    LogMouseWheel(mouseEvent.Delta);
+                    break;
+                case MacroEventType.MouseDown:
+                case MacroEventType.MouseUp:
+                    mouseEvent = (System.Windows.Forms.MouseEventArgs)e.EventArgs;
+                    Log(string.Format("Mouse {0}\t\t{1}\t\tSimulator\n", mouseEvent.Button, e.KeyMouseEventType));
+                    break;
+                case MacroEventType.MouseDownExt:
+                    MouseEventExtArgs downExtEvent = (MouseEventExtArgs)e.EventArgs;
+                    if (downExtEvent.Button != MouseButtons.Right)
+                    {
+                        Log(string.Format("Mouse Down \t {0}\t\t\tSimulator\n", downExtEvent.Button));
+                        return;
+                    }
+                    Log(string.Format("Mouse Down \t {0} Suppressed.\t\tSimulator\n", downExtEvent.Button));
+                    downExtEvent.Handled = true;
+                    break;
+                case MacroEventType.MouseWheelExt:
+                    MouseEventExtArgs wheelEvent = (MouseEventExtArgs)e.EventArgs;
+                    labelWheel.Content = string.Format("Wheel={0:000}", wheelEvent.Delta);
+                    Log("Mouse Wheel Move Suppressed.\t\tSimulator\n");
+                    wheelEvent.Handled = true;
+                    break;
+                case MacroEventType.MouseDragStarted:
+                    Log("MouseDragStarted\t\tSimulator\n");
+                    break;
+                case MacroEventType.MouseDragFinished:
+                    Log("MouseDragFinished\t\tSimulator\n");
+                    break;
+                case MacroEventType.MouseDoubleClick:
+                    mouseEvent = (System.Windows.Forms.MouseEventArgs)e.EventArgs;
+                    Log(string.Format("Mouse {0}\t\t{1}\t\tSimulator\n", mouseEvent.Button, e.KeyMouseEventType));
+                    break;
+                case MacroEventType.KeyPress:
+                    var keyEvent = (KeyPressEventArgs)e.EventArgs;
+                    Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)Char.ToUpper(keyEvent.KeyChar)).ToString());
+                    Log(string.Format("Key {0}\t\t{1}\t\tSimulator\n", key, e.KeyMouseEventType));
+                    break;
+                case MacroEventType.KeyDown:
+                case MacroEventType.KeyUp:
+                    var kEvent = (System.Windows.Forms.KeyEventArgs)e.EventArgs;
+                    Log(string.Format("Key {0}\t\t{1}\t\tSimulator\n", kEvent.KeyCode, e.KeyMouseEventType));
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

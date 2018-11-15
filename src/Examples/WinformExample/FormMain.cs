@@ -32,9 +32,7 @@ namespace WinformExample
         {
             InitializeComponent();
 
-            this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width, Screen.PrimaryScreen.WorkingArea.Height - this.Height);
-
-            keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
+            keyboardWatcher = eventHookFactory.GetKeyboardWatcher().Disable(MacroEventType.KeyDown | MacroEventType.KeyUp).Enable(MacroEventType.KeyPress);
             keyboardWatcher.OnKeyboardInput += (s, e) =>
             {
                 if (_macroEvents != null)
@@ -53,7 +51,7 @@ namespace WinformExample
                 }
             };
 
-            mouseWatcher = eventHookFactory.GetMouseWatcher().Enable(MacroEventType.MouseDragStarted | MacroEventType.MouseDoubleClick);
+            mouseWatcher = eventHookFactory.GetMouseWatcher().Enable(MacroEventType.MouseDoubleClick | MacroEventType.MouseDragStarted).Disable(MacroEventType.MouseDragFinished | MacroEventType.MouseMove);
             mouseWatcher.OnMouseInput += (s, e) =>
             {
                 if (_macroEvents != null)
@@ -140,6 +138,8 @@ namespace WinformExample
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            this.Location = new Point(Screen.PrimaryScreen.WorkingArea.Width - this.Width - 10, this.Height / 2);
+
             InitHotkey();
         }
 
@@ -251,7 +251,7 @@ namespace WinformExample
         {
             this.isPlaying = true;
             btnPlayback.Enabled = false;
-            var sim = new InputSimulator().Enable(MacroEventType.MouseDoubleClick);
+            var sim = new InputSimulator().Enable(MacroEventType.MouseDoubleClick | MacroEventType.KeyPress).Disable(MacroEventType.MouseMove | MacroEventType.KeyDown | MacroEventType.KeyUp);
             //var sim = new KeyMouseSimulator();
             sim.OnPlayback += OnPlayback;
             sim.PlayBack(_macroEvents);

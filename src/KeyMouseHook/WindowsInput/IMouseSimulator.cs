@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Loamen.KeyMouseHook
 {
@@ -27,6 +28,12 @@ namespace Loamen.KeyMouseHook
         /// <param name="absoluteX">The destination's absolute X-coordinate on the primary display device where 0 is the extreme left hand side of the display device and 65535 is the extreme right hand side of the display device.</param>
         /// <param name="absoluteY">The destination's absolute Y-coordinate on the primary display device where 0 is the top of the display device and 65535 is the bottom of the display device.</param>
         IMouseSimulator MoveMouseTo(double absoluteX, double absoluteY);
+        /// <summary>
+        /// Simulates mouse movement to the specified location on the primary display device.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        IMouseSimulator MoveMouseTo(Point point);
 
         /// <summary>
         /// Simulates mouse movement to the specified location on the Virtual Desktop which includes all active displays.
