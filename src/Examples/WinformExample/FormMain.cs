@@ -1,5 +1,6 @@
 ﻿using Gma.System.MouseKeyHook;
 using Loamen.KeyMouseHook;
+using Loamen.KeyMouseHook.Native;
 using Loamen.KeyMouseHook.Simulators;
 using System;
 using System.Collections.Generic;
@@ -320,6 +321,49 @@ namespace WinformExample
         private void SetPlaying(object state)
         {
             isPlaying = (bool)state;
+        }
+
+        private void btnDemo_Click(object sender, EventArgs e)
+        {
+            var sim = new InputSimulator();
+            sim.Keyboard
+               .ModifiedKeyStroke(VirtualKeyCode.LWIN, VirtualKeyCode.VK_R)
+               .Sleep(1000)
+               .TextEntry("notepad")
+               .Sleep(1000)
+               .KeyPress(VirtualKeyCode.RETURN)
+               .KeyPress(VirtualKeyCode.RETURN)
+               .Sleep(1000)
+               .TextEntry("0123456789")
+               .Sleep(1000)
+               .TextEntry(".")
+               .Sleep(1000)
+               .TextEntry(".")
+               .Sleep(1000)
+               .TextEntry(".")
+               .Sleep(1000)
+               .ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.SPACE)
+               .KeyPress(VirtualKeyCode.DOWN)
+               .KeyPress(VirtualKeyCode.RETURN);
+
+            var i = 10;
+            while (i-- > 0)
+            {
+                sim.Keyboard.KeyPress(VirtualKeyCode.LEFT).Sleep(100);
+
+            }
+            i = 10;
+            while (i-- > 0)
+            {
+                sim.Keyboard.KeyPress(VirtualKeyCode.RIGHT).Sleep(100);
+            }
+
+            sim.Keyboard
+               .Sleep(1000)
+               .KeyPress(VirtualKeyCode.RETURN)
+               .Sleep(1000)
+               .ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.F4)
+               .KeyPress(VirtualKeyCode.VK_N);
         }
     }
 }

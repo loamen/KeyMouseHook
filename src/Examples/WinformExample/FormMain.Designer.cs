@@ -41,6 +41,7 @@
             this.btnClearLog = new System.Windows.Forms.Button();
             this.checkBoxSupressMouseWheel = new System.Windows.Forms.CheckBox();
             this.radioNone = new System.Windows.Forms.RadioButton();
+            this.btnDemo = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,6 +134,7 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.White;
+            this.groupBox2.Controls.Add(this.btnDemo);
             this.groupBox2.Controls.Add(this.btnPlayback);
             this.groupBox2.Controls.Add(this.btnRecord);
             this.groupBox2.Controls.Add(this.btnClearLog);
@@ -156,7 +158,7 @@
             // btnPlayback
             // 
             this.btnPlayback.Enabled = false;
-            this.btnPlayback.Location = new System.Drawing.Point(110, 94);
+            this.btnPlayback.Location = new System.Drawing.Point(111, 94);
             this.btnPlayback.Name = "btnPlayback";
             this.btnPlayback.Size = new System.Drawing.Size(109, 21);
             this.btnPlayback.TabIndex = 18;
@@ -176,7 +178,7 @@
             // 
             // btnClearLog
             // 
-            this.btnClearLog.Location = new System.Drawing.Point(220, 94);
+            this.btnClearLog.Location = new System.Drawing.Point(222, 94);
             this.btnClearLog.Name = "btnClearLog";
             this.btnClearLog.Size = new System.Drawing.Size(75, 21);
             this.btnClearLog.TabIndex = 16;
@@ -207,6 +209,16 @@
             this.radioNone.Text = "None";
             this.radioNone.UseVisualStyleBackColor = false;
             this.radioNone.CheckedChanged += new System.EventHandler(this.radioNone_CheckedChanged);
+            // 
+            // btnDemo
+            // 
+            this.btnDemo.Location = new System.Drawing.Point(299, 94);
+            this.btnDemo.Name = "btnDemo";
+            this.btnDemo.Size = new System.Drawing.Size(75, 21);
+            this.btnDemo.TabIndex = 19;
+            this.btnDemo.Text = "Demo";
+            this.btnDemo.UseVisualStyleBackColor = true;
+            this.btnDemo.Click += new System.EventHandler(this.btnDemo_Click);
             // 
             // FormMain
             // 
@@ -242,6 +254,7 @@
         private System.Windows.Forms.RadioButton radioNone;
         private System.Windows.Forms.Button btnPlayback;
         private System.Windows.Forms.Button btnRecord;
+        private System.Windows.Forms.Button btnDemo;
     }
 }
 

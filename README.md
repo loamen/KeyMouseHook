@@ -3,6 +3,8 @@
 [![build](https://img.shields.io/shippable/5444c5ecb904a4b21567b0ff.svg)](https://travis-ci.org/loamen/KeyMouseHook)
 [![license](https://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://raw.githubusercontent.com/loamen/KeyMouseHook/master/LICENSE)
 [![platforms](https://img.shields.io/badge/platform-Windows-yellow.svg?style=flat)]()
+[![download_count](https://img.shields.io/github/downloads/loamen/KeyMouseHook/total.svg?style=plastic)](https://github.com/loamen/KeyMouseHook/releases) 
+[![release](https://img.shields.io/github/release/loamen/KeyMouseHook.svg?style=flat)](https://github.com/loamen/KeyMouseHook/releases) 
 
 [nuget-badge]: https://img.shields.io/badge/nuget-v1.0.4-blue.svg
 [nuget-url]: https://www.nuget.org/packages/KeyMouseHook
