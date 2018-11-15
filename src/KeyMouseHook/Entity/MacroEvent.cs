@@ -31,7 +31,7 @@ namespace Loamen.KeyMouseHook
     /// Event type
     /// </summary>
     [Serializable]
-    [FlagsAttribute]
+    [Flags]
     public enum MacroEventType
     {
         MouseMove = 1,
