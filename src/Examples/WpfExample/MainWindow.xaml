@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfExample"
         mc:Ignorable="d"
-        Title="MainWindow" Height="352" Width="618" Closing="Window_Closing" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="Mouse&amp;Keyboard Hooks And Simulators Demo" Height="352" Width="618" Closing="Window_Closing" WindowStartupLocation="Manual" ResizeMode="CanMinimize" Topmost="True" Loaded="MainWindow1_Loaded">
     <Grid>
         <RadioButton x:Name="radioApplication" Content="Application hooks" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="radioGlobal" Content="Global hooks" HorizontalAlignment="Left" Margin="145,15,0,0" VerticalAlignment="Top" IsChecked="True"/>

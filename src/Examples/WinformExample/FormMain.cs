@@ -32,7 +32,7 @@ namespace WinformExample
         {
             InitializeComponent();
 
-            keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
+            keyboardWatcher = eventHookFactory.GetKeyboardWatcher().Disable(MacroEventType.KeyDown | MacroEventType.KeyUp).Enable(MacroEventType.KeyPress);
             keyboardWatcher.OnKeyboardInput += (s, e) =>
             {
                 if (_macroEvents != null)
@@ -251,7 +251,7 @@ namespace WinformExample
         {
             this.isPlaying = true;
             btnPlayback.Enabled = false;
-            var sim = new InputSimulator().Enable(MacroEventType.MouseDoubleClick).Disable(MacroEventType.MouseMove);
+            var sim = new InputSimulator().Enable(MacroEventType.MouseDoubleClick | MacroEventType.KeyPress).Disable(MacroEventType.MouseMove | MacroEventType.KeyDown | MacroEventType.KeyUp);
             //var sim = new KeyMouseSimulator();
             sim.OnPlayback += OnPlayback;
             sim.PlayBack(_macroEvents);
