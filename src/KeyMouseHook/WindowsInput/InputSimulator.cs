@@ -133,13 +133,14 @@ namespace Loamen.KeyMouseHook
                         case MacroEventType.MouseClick:
                             {
                                 MouseEventArgs e = (MouseEventArgs)mouseKeyEvent.EventArgs;
+                                var WaitTime = 500;
                                 if (e.Button == MouseButtons.Left)
                                 {
                                     if ((this.MacroEventTypes & MacroEventType.MouseMove) == MacroEventType.MouseMove)
                                         this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonClick();
                                     else
                                     {
-                                        this.Mouse.Sleep(300).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonClick();
+                                        this.Mouse.Sleep(WaitTime).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonClick();
                                     }
                                 }
                                 else if (e.Button == MouseButtons.Right)
@@ -148,7 +149,7 @@ namespace Loamen.KeyMouseHook
                                         this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonClick();
                                     else
                                     {
-                                        this.Mouse.Sleep(300).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonClick();
+                                        this.Mouse.Sleep(WaitTime).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonClick();
                                     }
                                 }
                                 else if (e.Button == MouseButtons.Middle)
@@ -157,7 +158,7 @@ namespace Loamen.KeyMouseHook
                                         this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonClick();
                                     else
                                     {
-                                        this.Mouse.Sleep(300).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonClick();
+                                        this.Mouse.Sleep(WaitTime).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonClick();
                                     }
                                 }
                                 KListener_PlayBack(mouseKeyEvent);
