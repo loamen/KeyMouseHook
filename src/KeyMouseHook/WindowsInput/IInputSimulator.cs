@@ -35,7 +35,7 @@ namespace Loamen.KeyMouseHook
         IInputDeviceStateAdaptor InputDeviceState { get; }
 
         /// <summary>
-        /// Set which events can be palyed back.The default value is MacroEventType.KeyDown | MacroEventType.KeyUp | MacroEventType.MouseDown | MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel
+        /// Set which events can be palyed back.The default value is MacroEventType.KeyPress | MacroEventType.MouseClick | MacroEventType.MouseMove | MacroEventType.MouseWheel
         /// </summary>
         /// <param name="macroEventType"></param>
         /// <returns></returns>

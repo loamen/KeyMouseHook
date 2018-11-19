@@ -67,6 +67,7 @@ namespace WpfExample
                         mouseEvent = (System.Windows.Forms.MouseEventArgs)e.EventArgs;
                         LogMouseWheel(mouseEvent.Delta);
                         break;
+                    case MacroEventType.MouseClick:
                     case MacroEventType.MouseDown:
                     case MacroEventType.MouseUp:
                         mouseEvent = (System.Windows.Forms.MouseEventArgs)e.EventArgs;
@@ -120,7 +121,6 @@ namespace WpfExample
         {
             btnPlayback.IsEnabled = false;
             var sim = new InputSimulator();
-            //var sim = new KeyMouseSimulator();
             sim.OnPlayback += OnPlayback;
             sim.PlayBack(_macroEvents);
             btnPlayback.IsEnabled = true;

@@ -13,7 +13,7 @@ namespace Loamen.KeyMouseHook
     public class InputSimulator : IInputSimulator
     {
         public event EventHandler<MacroEvent> OnPlayback;
-        private MacroEventType macroEventTypes = MacroEventType.KeyDown | MacroEventType.KeyUp | MacroEventType.MouseDown | MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel;
+        private MacroEventType macroEventTypes = MacroEventType.KeyPress | MacroEventType.MouseClick | MacroEventType.MouseMove | MacroEventType.MouseWheel;
         /// <summary>
         /// The <see cref="IKeyboardSimulator"/> instance to use for simulating keyboard input.
         /// </summary>
@@ -85,7 +85,7 @@ namespace Loamen.KeyMouseHook
         public MacroEventType MacroEventTypes { get => macroEventTypes; set => macroEventTypes = value; }
 
         /// <summary>
-        /// Set which events can be palyed back.The default value is MacroEventType.KeyDown | MacroEventType.KeyUp | MacroEventType.MouseDown | MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel
+        /// Set which events can be palyed back.The default value is MacroEventType.KeyPress | MacroEventType.MouseClick | MacroEventType.MouseMove | MacroEventType.MouseWheel
         /// </summary>
         /// <param name="macroEventType"></param>
         /// <returns></returns>
@@ -130,6 +130,39 @@ namespace Loamen.KeyMouseHook
                                 KListener_PlayBack(mouseKeyEvent);
                             }
                             break;
+                        case MacroEventType.MouseClick:
+                            {
+                                MouseEventArgs e = (MouseEventArgs)mouseKeyEvent.EventArgs;
+                                if (e.Button == MouseButtons.Left)
+                                {
+                                    if ((this.MacroEventTypes & MacroEventType.MouseMove) == MacroEventType.MouseMove)
+                                        this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonClick();
+                                    else
+                                    {
+                                        this.Mouse.Sleep(300).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonClick();
+                                    }
+                                }
+                                else if (e.Button == MouseButtons.Right)
+                                {
+                                    if ((this.MacroEventTypes & MacroEventType.MouseMove) == MacroEventType.MouseMove)
+                                        this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonClick();
+                                    else
+                                    {
+                                        this.Mouse.Sleep(300).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonClick();
+                                    }
+                                }
+                                else if (e.Button == MouseButtons.Middle)
+                                {
+                                    if ((this.MacroEventTypes & MacroEventType.MouseMove) == MacroEventType.MouseMove)
+                                        this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonClick();
+                                    else
+                                    {
+                                        this.Mouse.Sleep(300).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonClick();
+                                    }
+                                }
+                                KListener_PlayBack(mouseKeyEvent);
+                            }
+                            break;
                         case MacroEventType.MouseDown:
                             {
                                 MouseEventArgs e = (MouseEventArgs)mouseKeyEvent.EventArgs;
@@ -139,7 +172,7 @@ namespace Loamen.KeyMouseHook
                                         this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonDown();
                                     else
                                     {
-                                        this.Mouse.MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonDown();
+                                        this.Mouse.Sleep(300).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonDown();
                                     }
                                 }
                                 else if (e.Button == MouseButtons.Right)
@@ -148,7 +181,7 @@ namespace Loamen.KeyMouseHook
                                         this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonDown();
                                     else
                                     {
-                                        this.Mouse.MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonDown();
+                                        this.Mouse.Sleep(300).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).RightButtonDown();
                                     }
                                 }
                                 else if (e.Button == MouseButtons.Middle)
@@ -157,7 +190,7 @@ namespace Loamen.KeyMouseHook
                                         this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonDown();
                                     else
                                     {
-                                        this.Mouse.MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonDown();
+                                        this.Mouse.Sleep(300).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonDown();
                                     }
                                 }
                                 KListener_PlayBack(mouseKeyEvent);

@@ -68,6 +68,7 @@ namespace WinformExample
                         mouseEvent = (MouseEventArgs)e.EventArgs;
                         LogMouseWheel(mouseEvent.Delta);
                         break;
+                    case MacroEventType.MouseClick:
                     case MacroEventType.MouseDown:
                     case MacroEventType.MouseUp:
                         mouseEvent = (MouseEventArgs)e.EventArgs;
@@ -253,7 +254,6 @@ namespace WinformExample
             this.isPlaying = true;
             btnPlayback.Enabled = false;
             var sim = new InputSimulator().Enable(MacroEventType.MouseDoubleClick | MacroEventType.KeyPress).Disable(MacroEventType.MouseMove | MacroEventType.KeyDown | MacroEventType.KeyUp);
-            //var sim = new KeyMouseSimulator();
             sim.OnPlayback += OnPlayback;
             sim.PlayBack(_macroEvents);
             btnPlayback.Enabled = true;
@@ -272,6 +272,7 @@ namespace WinformExample
                     mouseEvent = (MouseEventArgs)e.EventArgs;
                     LogMouseWheel(mouseEvent.Delta);
                     break;
+                case MacroEventType.MouseClick:
                 case MacroEventType.MouseDown:
                 case MacroEventType.MouseUp:
                     mouseEvent = (MouseEventArgs)e.EventArgs;

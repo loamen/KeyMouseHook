@@ -20,7 +20,7 @@ namespace Loamen.KeyMouseHook
             KeyboardMouseEvents = events ?? throw new ArgumentNullException("events can not be null.");
         }
         /// <summary>
-        /// Get an instance of mouse watcher.
+        /// Get an instance of mouse watcher.defalt event type is MacroEventType.MouseClick | MacroEventType.MouseMove | MacroEventType.MouseWheel
         /// </summary>
         /// <returns></returns>
         public MouseWatcher GetMouseWatcher()

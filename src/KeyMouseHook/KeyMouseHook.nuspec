@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>KeyMouseHook</id>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <title>KeyMouseHook</title>
     <authors>loamen</authors>
     <owners>loamen</owners>
@@ -11,7 +11,7 @@
     <licenseUrl>https://raw.githubusercontent.com/loamen/KeyMouseHook/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/loamen/KeyMouseHook</projectUrl>
     <iconUrl>https://github.com/loamen/KeyMouseHook/raw/master/documents/images/keyboard-mouse-hook-logo.png</iconUrl>
-    <description>This is a extension library use globalmousekeyhook and InputSimulator.it allows you to tap keyboard and mouse, to detect and record their activity event when an application is inactive and runs in background.The Windows Input Simulator provides a simple .NET(C#) interface to simulate Keyboard or Mouse input using the Win32 SendInput method.</description>
+    <description>This is a extended library use globalmousekeyhook and InputSimulator.it allows you to tap keyboard and mouse, to detect and record their activity event when an application is inactive and runs in background.The Windows Input Simulator provides a simple .NET(C#) interface to simulate Keyboard or Mouse input using the Win32 SendInput method.一款类似于按键精灵的模拟键盘和鼠标操作的c#扩展类库.</description>
     <summary>This library allows you to tap keyboard and mouse, detect and record their activity event and simulate keyboard or mouse input.一款类似于按键精灵的模拟键盘和鼠标操作的c#扩展类库</summary>
     <copyright>copyright@2018 loamen.com</copyright>
     <language>en-US</language>

@@ -81,6 +81,9 @@
     <Compile Include="WindowsInput\WindowsInputMessageDispatcher.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="KeyMouseHook.nuspec">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

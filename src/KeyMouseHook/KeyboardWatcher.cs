@@ -14,7 +14,7 @@ namespace Loamen.KeyMouseHook
         #region Fields
         private readonly object accesslock = new object();
         public event EventHandler<MacroEvent> OnKeyboardInput;
-        private MacroEventType macroEventTypes = MacroEventType.KeyDown | MacroEventType.KeyUp;
+        private MacroEventType macroEventTypes = MacroEventType.KeyPress;
         #endregion
 
         #region Properties
@@ -24,6 +24,10 @@ namespace Loamen.KeyMouseHook
         #endregion
 
         #region Ctor
+        /// <summary>
+        /// Get an instance of mouse watcher.defalt event type is MacroEventType.KeyPress
+        /// </summary>
+        /// <param name="factory"></param>
         internal KeyboardWatcher(KeyMouseFactory factory)
         {
             this.Factory = factory;
@@ -72,7 +76,7 @@ namespace Loamen.KeyMouseHook
         }
 
         /// <summary>
-        /// enable key press event
+        /// enable key press event, the default value is MacroEventType.KeyPress
         /// </summary>
         /// <param name="macroEventType">MacroEventType.KeyPress</param>
         /// <returns></returns>
@@ -83,7 +87,7 @@ namespace Loamen.KeyMouseHook
         }
 
         /// <summary>
-        /// disable events
+        /// disable events, the default value is MacroEventType.KeyPress
         /// </summary>
         /// <param name="macroEventType"></param>
         /// <returns></returns>

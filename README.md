@@ -6,7 +6,7 @@
 [![download_count](https://img.shields.io/github/downloads/loamen/KeyMouseHook/total.svg?style=plastic)](https://github.com/loamen/KeyMouseHook/releases) 
 [![release](https://img.shields.io/github/release/loamen/KeyMouseHook.svg?style=flat)](https://github.com/loamen/KeyMouseHook/releases) 
 
-[nuget-badge]: https://img.shields.io/badge/nuget-v1.0.4-blue.svg
+[nuget-badge]: https://img.shields.io/badge/nuget-v1.0.5-blue.svg
 [nuget-url]: https://www.nuget.org/packages/KeyMouseHook
 [source-url]: https://github.com/loamen/KeyMouseHook
 [mousekeyhook-url]: https://github.com/gmamaladze/globalmousekeyhook
@@ -19,7 +19,7 @@
 
 ## What it does?
 
-This is a extension library use [globalmousekeyhook][mousekeyhook-url] and [InputSimulator][inputsimulator-url] .it allows you to tap keyboard and mouse, to detect and record their activity event when an application is inactive and runs in background.The Windows Input Simulator provides a simple .NET(C#) interface to simulate Keyboard or Mouse input using the Win32 SendInput method.
+This is a extended library use [globalmousekeyhook][mousekeyhook-url] and [InputSimulator][inputsimulator-url] .it allows you to tap keyboard and mouse, to detect and record their activity event when an application is inactive and runs in background.The Windows Input Simulator provides a simple .NET(C#) interface to simulate Keyboard or Mouse input using the Win32 SendInput method.
 
 ## Prerequisites
 
@@ -77,7 +77,6 @@ private void StopWatch()
 private void Playback()
 {
    var sim = new InputSimulator();
-   //var sim = new KeyMouseSimulator();
    sim.PlayBack(_macroEvents);
 }
 ```

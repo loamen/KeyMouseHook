@@ -14,7 +14,7 @@ namespace Loamen.KeyMouseHook
         #region Fields
         private readonly object accesslock = new object();
         public event EventHandler<MacroEvent> OnMouseInput;
-        private MacroEventType macroEventTypes = MacroEventType.MouseDown | MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel;
+        private MacroEventType macroEventTypes = MacroEventType.MouseClick | MacroEventType.MouseMove | MacroEventType.MouseWheel;
         #endregion
 
         #region Properties
@@ -79,17 +79,25 @@ namespace Loamen.KeyMouseHook
         public MouseWatcher Enable(MacroEventType macroEventType)
         {
             this.MacroEventTypes |= macroEventType;
+            if ((macroEventType & MacroEventType.MouseClick) == MacroEventType.MouseClick)
+            {
+                Disable(MacroEventType.MouseUp | MacroEventType.MouseDown);
+            }
             return this;
         }
 
         /// <summary>
-        /// disable events
+        /// disable events, the default value is MacroEventType.MouseMove | MacroEventType.MouseUp | MacroEventType.MouseWheel
         /// </summary>
         /// <param name="macroEventType"></param>
         /// <returns></returns>
         public MouseWatcher Disable(MacroEventType macroEventType)
         {
             this.MacroEventTypes &= ~macroEventType;
+            if ((macroEventType & MacroEventType.MouseClick) == MacroEventType.MouseClick)
+            {
+                Enable(MacroEventType.MouseUp | MacroEventType.MouseDown);
+            }
             return this;
         }
 
@@ -117,6 +125,9 @@ namespace Loamen.KeyMouseHook
 
             if ((this.MacroEventTypes & MacroEventType.MouseDoubleClick) == MacroEventType.MouseDoubleClick)
                 this.Factory.KeyboardMouseEvents.MouseDoubleClick += OnMouseDoubleClick;
+
+            if ((this.MacroEventTypes & MacroEventType.MouseClick) == MacroEventType.MouseClick)
+                this.Factory.KeyboardMouseEvents.MouseClick += OnMouseClick;
         }
 
         private void Unsubscribe()
@@ -143,6 +154,9 @@ namespace Loamen.KeyMouseHook
 
             if ((this.MacroEventTypes & MacroEventType.MouseDoubleClick) == MacroEventType.MouseDoubleClick)
                 this.Factory.KeyboardMouseEvents.MouseDoubleClick -= OnMouseDoubleClick;
+
+            if ((this.MacroEventTypes & MacroEventType.MouseClick) == MacroEventType.MouseClick)
+                this.Factory.KeyboardMouseEvents.MouseClick -= OnMouseClick;
         }
 
         public void SupressMouse(bool isSupress, MacroEventType eventType)
@@ -288,6 +302,16 @@ namespace Loamen.KeyMouseHook
                 var time = Environment.TickCount - this.Factory.lastTimeRecorded;
                 KListener_MouseEvent(new MacroEvent(MacroEventType.MouseUp, e, time));
                 Debug.WriteLine(string.Format("MouseUp \t\t {0}\n", e.Button));
+            }
+        }
+
+        private void OnMouseClick(object sender, MouseEventArgs e)
+        {
+            if (isRunning)
+            {
+                var time = Environment.TickCount - this.Factory.lastTimeRecorded;
+                KListener_MouseEvent(new MacroEvent(MacroEventType.MouseClick, e, time));
+                Debug.WriteLine(string.Format("MouseClick \t\t {0}\n", e.Button));
             }
         }
 

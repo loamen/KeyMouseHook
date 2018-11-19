@@ -44,9 +44,10 @@ namespace Loamen.KeyMouseHook
         MouseWheelExt = 128,
         MouseDragStarted = 256,
         MouseDragFinished = 512,
-        MouseDoubleClick = 1024,
-        KeyDown = 2048,
-        KeyUp = 4096,
-        KeyPress = 8192
+        MouseClick = 1024,
+        MouseDoubleClick = 2048,
+        KeyDown = 4096,
+        KeyUp = 8192,
+        KeyPress = 16384
     }
 }
