@@ -66,6 +66,8 @@
     <Compile Include="WindowsInput\KeyboardSimulator.cs" />
     <Compile Include="WindowsInput\MouseButton.cs" />
     <Compile Include="WindowsInput\MouseSimulator.cs" />
+    <Compile Include="WindowsInput\Native\Entity\CopyDataStruct.cs" />
+    <Compile Include="WindowsInput\Native\Entity\NativeCalls.cs" />
     <Compile Include="WindowsInput\Native\HARDWAREINPUT.cs" />
     <Compile Include="WindowsInput\Native\INPUT.cs" />
     <Compile Include="WindowsInput\Native\InputType.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="WindowsInput\Native\XButton.cs" />
     <Compile Include="WindowsInput\WindowsInputDeviceStateAdaptor.cs" />
     <Compile Include="WindowsInput\WindowsInputMessageDispatcher.cs" />
+    <Compile Include="WindowsInput\WinTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KeyMouseHook.nuspec">
