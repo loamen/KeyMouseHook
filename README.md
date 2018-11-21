@@ -19,7 +19,7 @@
 
 ## What it does?
 
-This is a extended library use [globalmousekeyhook][mousekeyhook-url] and [InputSimulator][inputsimulator-url] .it allows you to tap keyboard and mouse, to detect and record their activity event when an application is inactive and runs in background.The Windows Input Simulator provides a simple .NET(C#) interface to simulate Keyboard or Mouse input using the Win32 SendInput method.
+This is an extension to [globalmousekeyhook][mousekeyhook-url] and [InputSimulator][inputsimulator-url] library which allows you to tap keyboard and mouse, to detect and record their activity event when an application is inactive and runs in background.The Windows Input Simulator provides a simple .NET(C#) interface to simulate Keyboard or Mouse input using the Win32 SendInput method.
 
 ## Prerequisites
 
