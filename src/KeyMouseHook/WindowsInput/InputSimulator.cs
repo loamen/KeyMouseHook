@@ -13,7 +13,7 @@ namespace Loamen.KeyMouseHook
     public class InputSimulator : IInputSimulator
     {
         public event EventHandler<MacroEvent> OnPlayback;
-        private MacroEventType macroEventTypes = MacroEventType.KeyPress | MacroEventType.MouseClick | MacroEventType.MouseMove | MacroEventType.MouseWheel;
+        private MacroEventType macroEventTypes = MacroEventType.KeyPress | MacroEventType.MouseDown | MacroEventType.MouseUp | MacroEventType.MouseMove | MacroEventType.MouseWheel;
         /// <summary>
         /// The <see cref="IKeyboardSimulator"/> instance to use for simulating keyboard input.
         /// </summary>

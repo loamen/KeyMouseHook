@@ -14,7 +14,7 @@ namespace Loamen.KeyMouseHook
         #region Fields
         private readonly object accesslock = new object();
         public event EventHandler<MacroEvent> OnMouseInput;
-        private MacroEventType macroEventTypes = MacroEventType.MouseClick | MacroEventType.MouseMove | MacroEventType.MouseWheel;
+        private MacroEventType macroEventTypes = MacroEventType.MouseDown | MacroEventType.MouseUp | MacroEventType.MouseMove | MacroEventType.MouseWheel;
         #endregion
 
         #region Properties

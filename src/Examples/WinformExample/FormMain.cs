@@ -33,7 +33,7 @@ namespace WinformExample
         {
             InitializeComponent();
 
-            keyboardWatcher = eventHookFactory.GetKeyboardWatcher().Disable(MacroEventType.KeyDown | MacroEventType.KeyUp).Enable(MacroEventType.KeyPress);
+            keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
             keyboardWatcher.OnKeyboardInput += (s, e) =>
             {
                 if (_macroEvents != null)
@@ -52,7 +52,7 @@ namespace WinformExample
                 }
             };
 
-            mouseWatcher = eventHookFactory.GetMouseWatcher().Enable(MacroEventType.MouseDoubleClick | MacroEventType.MouseDragStarted).Disable(MacroEventType.MouseDragFinished | MacroEventType.MouseMove);
+            mouseWatcher = eventHookFactory.GetMouseWatcher();
             mouseWatcher.OnMouseInput += (s, e) =>
             {
                 if (_macroEvents != null)
@@ -109,7 +109,7 @@ namespace WinformExample
         private void Log(string text)
         {
             if (IsDisposed) return;
-            textBoxLog.AppendText(text);
+            textBoxLog.AppendText(DateTime.Now.ToString("HH:mm:ss:")  + text);
             textBoxLog.ScrollToCaret();
         }
 
@@ -253,7 +253,7 @@ namespace WinformExample
         {
             this.isPlaying = true;
             btnPlayback.Enabled = false;
-            var sim = new InputSimulator().Enable(MacroEventType.MouseDoubleClick | MacroEventType.KeyPress).Disable(MacroEventType.MouseMove | MacroEventType.KeyDown | MacroEventType.KeyUp);
+            var sim = new InputSimulator();
             sim.OnPlayback += OnPlayback;
             sim.PlayBack(_macroEvents);
             btnPlayback.Enabled = true;

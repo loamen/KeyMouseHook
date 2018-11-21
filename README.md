@@ -81,6 +81,12 @@ private void Playback()
 }
 ```
 
+```csharp
+keyboardWatcher = eventHookFactory.GetKeyboardWatcher().Disable(MacroEventType.KeyDown | MacroEventType.KeyUp).Enable(MacroEventType.KeyPress);
+mouseWatcher = eventHookFactory.GetMouseWatcher().Enable(MacroEventType.MouseDoubleClick | MacroEventType.MouseDragStarted).Disable(MacroEventType.MouseDragFinished | MacroEventType.MouseMove);
+var sim = new InputSimulator().Enable(MacroEventType.MouseDoubleClick | MacroEventType.KeyPress).Disable(MacroEventType.MouseMove | MacroEventType.KeyDown | MacroEventType.KeyUp);
+```
+
 (also have a look at the Demo app included with the source)
 
 ## Screen Shots
