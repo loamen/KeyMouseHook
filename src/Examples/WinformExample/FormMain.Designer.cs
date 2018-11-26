@@ -36,12 +36,12 @@
             this.labelMousePosition = new System.Windows.Forms.Label();
             this.textBoxLog = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnDemo = new System.Windows.Forms.Button();
             this.btnPlayback = new System.Windows.Forms.Button();
             this.btnRecord = new System.Windows.Forms.Button();
             this.btnClearLog = new System.Windows.Forms.Button();
             this.checkBoxSupressMouseWheel = new System.Windows.Forms.CheckBox();
             this.radioNone = new System.Windows.Forms.RadioButton();
-            this.btnDemo = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -155,6 +155,16 @@
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             // 
+            // btnDemo
+            // 
+            this.btnDemo.Location = new System.Drawing.Point(299, 94);
+            this.btnDemo.Name = "btnDemo";
+            this.btnDemo.Size = new System.Drawing.Size(75, 21);
+            this.btnDemo.TabIndex = 19;
+            this.btnDemo.Text = "Demo";
+            this.btnDemo.UseVisualStyleBackColor = true;
+            this.btnDemo.Click += new System.EventHandler(this.btnDemo_Click);
+            // 
             // btnPlayback
             // 
             this.btnPlayback.Enabled = false;
@@ -162,7 +172,7 @@
             this.btnPlayback.Name = "btnPlayback";
             this.btnPlayback.Size = new System.Drawing.Size(109, 21);
             this.btnPlayback.TabIndex = 18;
-            this.btnPlayback.Text = "Playback(Ctrl+F12)";
+            this.btnPlayback.Text = "Playback(Alt+ScrLk)";
             this.btnPlayback.UseVisualStyleBackColor = true;
             this.btnPlayback.Click += new System.EventHandler(this.btnPlayback_Click);
             // 
@@ -172,7 +182,7 @@
             this.btnRecord.Name = "btnRecord";
             this.btnRecord.Size = new System.Drawing.Size(97, 21);
             this.btnRecord.TabIndex = 17;
-            this.btnRecord.Text = "Record(Ctrl+F10)";
+            this.btnRecord.Text = "Record(ScrLk)";
             this.btnRecord.UseVisualStyleBackColor = true;
             this.btnRecord.Click += new System.EventHandler(this.btnRecord_Click);
             // 
@@ -209,16 +219,6 @@
             this.radioNone.Text = "None";
             this.radioNone.UseVisualStyleBackColor = false;
             this.radioNone.CheckedChanged += new System.EventHandler(this.radioNone_CheckedChanged);
-            // 
-            // btnDemo
-            // 
-            this.btnDemo.Location = new System.Drawing.Point(299, 94);
-            this.btnDemo.Name = "btnDemo";
-            this.btnDemo.Size = new System.Drawing.Size(75, 21);
-            this.btnDemo.TabIndex = 19;
-            this.btnDemo.Text = "Demo";
-            this.btnDemo.UseVisualStyleBackColor = true;
-            this.btnDemo.Click += new System.EventHandler(this.btnDemo_Click);
             // 
             // FormMain
             // 

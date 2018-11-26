@@ -10,6 +10,8 @@ namespace ConsoleExample
     class Program
     {
         internal static List<MacroEvent> _macroEvents = new List<MacroEvent>();
+        internal const char exitChar = 'Q';
+
         internal static void Main(string[] args)
         {
             ShowMenu();
@@ -22,7 +24,7 @@ namespace ConsoleExample
             {
                 {"1. Record keys", LogKeys.Record},
                 {"2. Playback", LogKeys.Playback},
-                {"Q. Quit", Exit}
+                {exitChar + ". Quit", Exit}
             };
 
             Console.WriteLine("Please select one of these:");

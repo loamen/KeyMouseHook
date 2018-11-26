@@ -15,9 +15,9 @@ namespace ConsoleExample
     {
         public static void Record(Action action)
         {
-            Console.WriteLine("Press Q to quit.");
+            Console.WriteLine("Press " + Program.exitChar + " to quit.");
             KeyMouseFactory eventHookFactory = new KeyMouseFactory(Hook.GlobalEvents());
-            KeyboardWatcher keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
+            KeyboardWatcher keyboardWatcher = eventHookFactory.GetKeyboardWatcher().Disable(MacroEventType.KeyDown| MacroEventType.KeyUp).Enable(MacroEventType.KeyPress);
             Program._macroEvents = new List<MacroEvent>();
             keyboardWatcher.OnKeyboardInput += (s, e) =>
             {
@@ -25,9 +25,10 @@ namespace ConsoleExample
 
                 if (e.KeyMouseEventType == MacroEventType.KeyPress)
                 {
+                    var ch = Console.ReadKey(true).KeyChar;
                     var keyEvent = (KeyPressEventArgs)e.EventArgs;
                     Console.Write(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyChar, e.KeyMouseEventType));
-                    if (keyEvent.KeyChar == 'q')
+                    if (keyEvent.KeyChar == Program.exitChar)
                     {
                         keyboardWatcher.Stop();
                         eventHookFactory.Dispose();
@@ -35,6 +36,7 @@ namespace ConsoleExample
                         Console.WriteLine("Record stopped");
                         Program.ConsoleLine();
                         action();
+                        return;
                     }
                 }
             };
@@ -70,7 +72,7 @@ namespace ConsoleExample
                                     KeyPressEventArgs ergs = (KeyPressEventArgs)mouseKeyEvent.EventArgs;
                                    
                                     Console.WriteLine(string.Format("Input {0}\t\t{1}", ergs.KeyChar, mouseKeyEvent.KeyMouseEventType));
-                                    if (ergs.KeyChar == 'q')
+                                    if (ergs.KeyChar == Program.exitChar)
                                     {
                                         Program.ConsoleLine();
                                         Console.Write("Playback completed");

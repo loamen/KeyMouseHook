@@ -9,6 +9,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,6 +19,9 @@ namespace WinformExample
 {
     public partial class FormMain : Form
     {
+        [DllImport("user32.dll")]
+        static extern short VkKeyScan(char ch);
+
         private readonly KeyMouseFactory eventHookFactory = new KeyMouseFactory(Hook.GlobalEvents());
         private readonly KeyboardWatcher keyboardWatcher;
         private readonly MouseWatcher mouseWatcher;
@@ -36,20 +40,24 @@ namespace WinformExample
             keyboardWatcher = eventHookFactory.GetKeyboardWatcher();
             keyboardWatcher.OnKeyboardInput += (s, e) =>
             {
-                if (_macroEvents != null)
-                    _macroEvents.Add(e);
-
                 if (e.KeyMouseEventType == MacroEventType.KeyPress)
                 {
                     var keyEvent = (KeyPressEventArgs)e.EventArgs;
-                    Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)Char.ToUpper(keyEvent.KeyChar)).ToString());
-                    Log(string.Format("Key {0}\t\t{1}\n", key, e.KeyMouseEventType));
+                    //Keys key = (Keys)Enum.Parse(typeof(Keys), ((int)keyEvent.KeyChar).ToString());
+                    //var j = System.Windows.Input.KeyInterop.KeyFromVirtualKey(Convert.ToInt32(keyEvent.KeyChar));
+                    //var mappedChar = VkKeyScan(keyEvent.KeyChar);
+                    Log(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyChar, e.KeyMouseEventType));
                 }
                 else
                 {
                     var keyEvent = (KeyEventArgs)e.EventArgs;
                     Log(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyCode, e.KeyMouseEventType));
+                    if ((keyEvent.KeyData == (Keys.Alt | Keys.Scroll)) || keyEvent.KeyData == Keys.Scroll)
+                        return;
                 }
+
+                if (_macroEvents != null)
+                    _macroEvents.Add(e);
             };
 
             mouseWatcher = eventHookFactory.GetMouseWatcher();
@@ -149,8 +157,8 @@ namespace WinformExample
         {
             hotkey = new Hotkey(this.Handle);
             hotkey.OnHotkey += Hotkey_OnHotkey;
-            this.hotkeyRecordId = hotkey.RegisterHotkey(Keys.F10, Hotkey.KeyFlags.MOD_CONTROL);
-            this.hotkeyPlaybackId = hotkey.RegisterHotkey(Keys.F12, Hotkey.KeyFlags.MOD_CONTROL);
+            this.hotkeyRecordId = hotkey.RegisterHotkey(Keys.Scroll, Hotkey.KeyFlags.NONE);
+            this.hotkeyPlaybackId = hotkey.RegisterHotkey(Keys.Scroll, Hotkey.KeyFlags.MOD_ALT);
 
             #region Combination
             //var record = Combination.TriggeredBy(Keys.F10).With(Keys.Control);
@@ -235,13 +243,13 @@ namespace WinformExample
                 else if (radioGlobal.Checked)
                     StartWatch(Hook.GlobalEvents());
                 isRecording = true;
-                btnRecord.Text = "Stop(Ctrl+F10)";
+                btnRecord.Text = "Stop(ScrLk)";
             }
             else
             {
                 StopWatch();
                 isRecording = false;
-                btnRecord.Text = "Record(Ctrl+F10)";
+                btnRecord.Text = "Record(ScrLk)";
                 if (_macroEvents != null && _macroEvents.Count > 0)
                 {
                     btnPlayback.Enabled = true;
