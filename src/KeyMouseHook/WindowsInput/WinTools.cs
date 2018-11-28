@@ -30,7 +30,7 @@ namespace Loamen.KeyMouseHook
         /// <param name="lpWindowName"></param>
         /// <returns></returns>
         [DllImport("user32.dll", EntryPoint = "FindWindow")]
-        public static extern int FindWindow(string lpClassName, string lpWindowName);
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
         /// <summary>
         /// 在DLL库中的发送消息函数
         /// </summary>
@@ -42,13 +42,20 @@ namespace Loamen.KeyMouseHook
         [DllImport("user32.dll", EntryPoint = "SendMessage")]
         public static extern int SendMessage(int hWnd, int Msg, int wParam, ref CopyDataStruct lParam);
 
+        [DllImport("user32.dll", EntryPoint = "SendMessage")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, ref CopyDataStruct lParam);
+
         /// <summary>
         /// 获取焦点
         /// </summary>
         /// <param name="hwnd"></param>
         [DllImport("user32.dll", EntryPoint = "SetForegroundWindow", SetLastError = true)]
         public static extern void SetForegroundWindow(IntPtr hwnd);
-
+        /// <summary>
+        /// 最大化窗口-3，最小化窗口-2，正常大小窗口-1；
+        /// </summary>
+        [DllImport("user32.dll", EntryPoint = "ShowWindow", CharSet = CharSet.Auto)]
+        public static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
         /// <summary>
         /// 得到目标进程句柄的函数
         /// </summary>
