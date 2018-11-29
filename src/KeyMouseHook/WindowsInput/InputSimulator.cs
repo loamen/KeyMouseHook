@@ -1,7 +1,9 @@
 ﻿using Loamen.KeyMouseHook.Native;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -13,6 +15,7 @@ namespace Loamen.KeyMouseHook
     public class InputSimulator : IInputSimulator
     {
         public event EventHandler<MacroEvent> OnPlayback;
+        public CancellationTokenSource CancelTokenSource { get; set; }
         private MacroEventType macroEventTypes = MacroEventType.KeyDown | MacroEventType.KeyUp | MacroEventType.MouseDown | MacroEventType.MouseUp | MacroEventType.MouseMove | MacroEventType.MouseWheel;
         /// <summary>
         /// The <see cref="IKeyboardSimulator"/> instance to use for simulating keyboard input.
@@ -119,6 +122,12 @@ namespace Loamen.KeyMouseHook
             {
                 foreach (MacroEvent mouseKeyEvent in mouseKeyEventList)
                 {
+                    if (this.CancelTokenSource != null && this.CancelTokenSource.IsCancellationRequested)
+                    {
+                        this.CancelTokenSource.Token.ThrowIfCancellationRequested();
+                        Debug.WriteLine("Thead IsCancellationRequested....");
+                        break;
+                    }
                     #region Mouse simulator
                     if ((mouseKeyEvent.KeyMouseEventType & this.MacroEventTypes) != mouseKeyEvent.KeyMouseEventType) break;
                     switch (mouseKeyEvent.KeyMouseEventType)
@@ -134,7 +143,7 @@ namespace Loamen.KeyMouseHook
                         case MacroEventType.MouseClick:
                             {
                                 MouseEventArgs e = (MouseEventArgs)mouseKeyEvent.EventArgs;
-                               
+
                                 if (e.Button == MouseButtons.Left)
                                 {
                                     if ((this.MacroEventTypes & MacroEventType.MouseMove) == MacroEventType.MouseMove)
@@ -174,7 +183,7 @@ namespace Loamen.KeyMouseHook
                                         this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonDown();
                                     else
                                     {
-                                        this.Mouse.Sleep(WaitTime).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonDown();
+                                        this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent > 500 ? WaitTime : 0).MoveMouseTo(new Point(e.X, e.Y).ToAbsolutePoint()).Sleep(mouseKeyEvent.TimeSinceLastEvent).LeftButtonDown();
                                     }
                                 }
                                 else if (e.Button == MouseButtons.Right)
@@ -244,7 +253,7 @@ namespace Loamen.KeyMouseHook
                         case MacroEventType.KeyDown:
                             {
                                 KeyEventArgs ergs = (KeyEventArgs)mouseKeyEvent.EventArgs;
-                             
+
                                 this.Keyboard.Sleep(mouseKeyEvent.TimeSinceLastEvent).KeyDown((VirtualKeyCode)((int)ergs.KeyCode));
                                 KListener_PlayBack(mouseKeyEvent);
                             }

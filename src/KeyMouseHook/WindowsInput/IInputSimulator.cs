@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Loamen.KeyMouseHook
 {
@@ -12,6 +13,7 @@ namespace Loamen.KeyMouseHook
         /// Get or set enable events
         /// </summary>
         MacroEventType MacroEventTypes { get; set; }
+        CancellationTokenSource CancelTokenSource { get; set; }
         /// <summary>
         /// Callback event
         /// </summary>
