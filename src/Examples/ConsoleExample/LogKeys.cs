@@ -25,9 +25,9 @@ namespace ConsoleExample
 
                 if (e.KeyMouseEventType == MacroEventType.KeyPress)
                 {
-                    var ch = Console.ReadKey(true).KeyChar;
                     var keyEvent = (KeyPressEventArgs)e.EventArgs;
                     Console.Write(string.Format("Key {0}\t\t{1}\n", keyEvent.KeyChar, e.KeyMouseEventType));
+                    //var ch = Console.ReadKey(true).KeyChar;
                     if (keyEvent.KeyChar == Program.exitChar)
                     {
                         keyboardWatcher.Stop();
