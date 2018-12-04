@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Loamen.KeyMouseHook
 {
-    public class WinTools
+    public class WinApi
     {
         public const int OPEN_PROCESS_ALL = 2035711;
         public const int PAGE_READWRITE = 4;
@@ -22,6 +22,9 @@ namespace Loamen.KeyMouseHook
         private const int MEM_RELEASE = 0x8000;
         private const int MEM_DECOMMIT = 0x4000;
         private const int PROCESS_ALL_ACCESS = 0x1F0FFF;
+
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HTCAPTION = 0x2;
 
         /// <summary>
         /// 通过窗口的标题来查找窗口的句柄
@@ -210,5 +213,28 @@ namespace Loamen.KeyMouseHook
         /// <returns></returns>
         [DllImport("Kernel32.dll")]
         public static extern System.Int32 VirtualFreeEx(int hProcess,int lpAddress,int dwSize,int flAllocationType);
+        /// <summary>
+        /// 捕获鼠标
+        /// </summary>
+        /// <param name="h"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetCapture(IntPtr h);
+        /// <summary>
+        /// 释放鼠标
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("User32.dll")]
+        public static extern bool ReleaseCapture();
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="Msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        [DllImport("User32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
     }
 }

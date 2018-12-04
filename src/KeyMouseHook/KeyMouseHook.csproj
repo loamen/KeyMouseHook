@@ -82,7 +82,7 @@
     <Compile Include="WindowsInput\Native\XButton.cs" />
     <Compile Include="WindowsInput\WindowsInputDeviceStateAdaptor.cs" />
     <Compile Include="WindowsInput\WindowsInputMessageDispatcher.cs" />
-    <Compile Include="WindowsInput\WinTools.cs" />
+    <Compile Include="WindowsInput\Native\WinApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="KeyMouseHook.nuspec">
