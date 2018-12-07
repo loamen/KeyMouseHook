@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Loamen.com")]
 [assembly: AssemblyProduct("Loamen.KeyMouseHook")]
-[assembly: AssemblyCopyright("Copyright©Loamen.com 2018")]
-[assembly: AssemblyTrademark("Loamen.com")]
+[assembly: AssemblyCopyright("Copyright©2018, Loamen")]
+[assembly: AssemblyTrademark("Loamen")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 会使此程序集中的类型
