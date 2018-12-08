@@ -54,6 +54,8 @@ namespace Loamen.KeyMouseHook
         /// Play back
         /// </summary>
         /// <param name="mouseKeyEventList"></param>
-        void PlayBack(IList<MacroEvent> mouseKeyEventList);
+        /// <param name="windowTitle"></param>
+        /// <param name="windowClassName"></param>
+        void PlayBack(IList<MacroEvent> mouseKeyEventList, string windowTitle = null, string windowClassName = null);
     }
 }

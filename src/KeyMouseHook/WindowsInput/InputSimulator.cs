@@ -113,7 +113,7 @@ namespace Loamen.KeyMouseHook
         /// simulate keyboard and mouse events
         /// </summary>
         /// <param name="mouseKeyEventList"></param>
-        public void PlayBack(IList<MacroEvent> mouseKeyEventList)
+        public void PlayBack(IList<MacroEvent> mouseKeyEventList, string windowTitle = null, string windowClassName = null)
         {
             if (mouseKeyEventList == null || mouseKeyEventList.Count == 0) return;
             var WaitTime = 1000;
@@ -177,6 +177,7 @@ namespace Loamen.KeyMouseHook
                         case MacroEventType.MouseDown:
                             {
                                 MouseEventArgs e = (MouseEventArgs)mouseKeyEvent.EventArgs;
+                                SetWindow(windowTitle, windowClassName);
                                 if (e.Button == MouseButtons.Left)
                                 {
                                     if ((this.MacroEventTypes & MacroEventType.MouseMove) == MacroEventType.MouseMove)
@@ -222,6 +223,7 @@ namespace Loamen.KeyMouseHook
                                 {
                                     this.Mouse.Sleep(mouseKeyEvent.TimeSinceLastEvent).MiddleButtonUp();
                                 }
+                                ReleaseWindow(windowTitle, windowClassName);
                                 KListener_PlayBack(mouseKeyEvent);
                             }
                             break;
@@ -253,7 +255,7 @@ namespace Loamen.KeyMouseHook
                         case MacroEventType.KeyDown:
                             {
                                 KeyEventArgs ergs = (KeyEventArgs)mouseKeyEvent.EventArgs;
-
+                                SetWindow(windowTitle, windowClassName);
                                 this.Keyboard.Sleep(mouseKeyEvent.TimeSinceLastEvent).KeyDown((VirtualKeyCode)((int)ergs.KeyCode));
                                 KListener_PlayBack(mouseKeyEvent);
                             }
@@ -262,6 +264,7 @@ namespace Loamen.KeyMouseHook
                             {
                                 KeyEventArgs ergs = (KeyEventArgs)mouseKeyEvent.EventArgs;
                                 this.Keyboard.Sleep(mouseKeyEvent.TimeSinceLastEvent).KeyUp((VirtualKeyCode)((int)ergs.KeyCode));
+                                ReleaseWindow(windowTitle, windowClassName);
                                 KListener_PlayBack(mouseKeyEvent);
                             }
                             break;
@@ -284,6 +287,37 @@ namespace Loamen.KeyMouseHook
         private void KListener_PlayBack(MacroEvent e)
         {
             OnPlayback?.Invoke(null, e);
+        }
+
+        /// <summary>
+        /// 设置窗体置前和键鼠事件总是响应
+        /// </summary>
+        /// <param name="windowTitle"></param>
+        /// <param name="windowClassName"></param>
+        private void SetWindow(string windowTitle, string windowClassName = null)
+        {
+            if (string.IsNullOrEmpty(windowTitle)) return;
+            IntPtr wndFx = WinApi.FindWindow(windowClassName, windowTitle);
+            if (wndFx != null && wndFx.ToInt32() > 0)
+            {
+                WinApi.SetForegroundWindow(wndFx);
+                WinApi.SetCapture(wndFx);
+            }
+        }
+
+        /// <summary>
+        /// 释放键鼠
+        /// </summary>
+        /// <param name="windowTitle"></param>
+        /// <param name="windowClassName"></param>
+        private void ReleaseWindow(string windowTitle, string windowClassName = null)
+        {
+            if (string.IsNullOrEmpty(windowTitle)) return;
+            IntPtr wndFx = WinApi.FindWindow(windowClassName, windowTitle);
+            if (wndFx != null && wndFx.ToInt32() > 0)
+            {
+                WinApi.ReleaseCapture();
+            }
         }
     }
 }
