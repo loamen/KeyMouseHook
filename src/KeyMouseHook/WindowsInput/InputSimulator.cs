@@ -302,6 +302,7 @@ namespace Loamen.KeyMouseHook
             {
                 WinApi.SetForegroundWindow(wndFx);
                 WinApi.SetCapture(wndFx);
+                Thread.Sleep(300);
             }
         }
 
