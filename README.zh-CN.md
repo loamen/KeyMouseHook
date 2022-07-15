@@ -24,6 +24,8 @@
 ## 环境
 
 * **Windows:** .Net Framework 4.0+
+* **分支 master/dev:** .Net Framework 4.0
+* **分支 framework4.8:** .Net Framework 4.8
 
 ## 安装和源码
 
