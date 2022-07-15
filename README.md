@@ -24,6 +24,8 @@ This is an extension to [globalmousekeyhook][mousekeyhook-url] and [InputSimulat
 ## Prerequisites
 
 * **Windows:** .Net Framework 4.0+
+* **Branch master/dev:** .Net Framework 4.0
+* **Branch framework4.8:** .Net Framework 4.8
 
 ## Installation and sources
 
